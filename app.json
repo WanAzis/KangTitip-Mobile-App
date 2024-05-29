@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "KangTitip_Mobile_App",
+    "name": "KangTitip",
     "slug": "KangTitip_Mobile_App",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -19,7 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.KangTitip"
     },
     "web": {
       "bundler": "metro",

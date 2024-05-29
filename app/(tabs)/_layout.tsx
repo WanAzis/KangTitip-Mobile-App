@@ -29,8 +29,9 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          headerTitle: 'Home',
+          // title: 'Home',
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           headerRight: () => (
             <Link href="/modal" asChild>
               <Pressable>
@@ -48,10 +49,49 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="saved"
         options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          headerTitle: 'Saved',
+          // title: 'Saved',
+          tabBarIcon: ({ color }) => <TabBarIcon name="bookmark-o" color={color} />,
+          headerRight: () => (
+            <Link href="/modal" asChild>
+              <Pressable>
+                {({ pressed }) => (
+                  <FontAwesome
+                    name="info-circle"
+                    size={25}
+                    color={Colors[colorScheme ?? 'light'].text}
+                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                  />
+                )}
+              </Pressable>
+            </Link>
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="transaction"
+        options={{
+          headerTitle: 'Transaction',
+          title: 'Transaction',
+          tabBarIcon: ({ color }) => <TabBarIcon name="tags" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="request"
+        options={{
+          headerTitle: 'Request',
+          title: 'Request',
+          tabBarIcon: ({ color }) => <TabBarIcon name="sticky-note-o" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          headerTitle: 'Profile',
+          title: 'Profile',
+          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
         }}
       />
     </Tabs>
