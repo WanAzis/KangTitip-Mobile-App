@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, ScrollView, FlatList, Image, TextInput} from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons, FontAwesome5, Ionicons, AntDesign } from '@expo/vector-icons';
-import { Text, View } from '@/components/Themed';
+import { Text, View } from '@/constants/Themed';
 import { Picker } from '@react-native-picker/picker';
 import { SetStateAction, useState } from 'react';
 import { Link, router } from 'expo-router';
