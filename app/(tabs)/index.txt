@@ -1,0 +1,149 @@
+import React from 'react';
+import { ScrollView, StyleSheet, Button, FlatList, Dimensions, ViewBase, ViewComponent, Image } from 'react-native';
+import { Text, View } from '@/constants/Themed';
+
+import styles from './index.style';
+import ProductCard from '@/components/ProductCard';
+
+// Data dummy untuk produk
+const products = Array.from({ length: 10 }, (_, index) => ({
+  id: index.toString(),
+  name: `Product ${index + 1}`,
+}));
+
+const dummyData = [
+  {
+    id: '1',
+    name: 'Product 1',
+    price: 50,
+    deadline: '2024-06-15',
+    shippingDate: '2024-06-20',
+    image: '../../assets/images/product-1.jpeg',
+  },
+  {
+    id: '2',
+    name: 'Product 2',
+    price: 60,
+    deadline: '2024-06-16',
+    shippingDate: '2024-06-21',
+    image: '../../assets/images/product-2.jpeg',
+  },
+  {
+    id: '3',
+    name: 'Product 3',
+    price: 60,
+    deadline: '2024-06-16',
+    shippingDate: '2024-06-21',
+    image: '../../assets/images/product-3.jpeg',
+  },
+  {
+    id: '4',
+    name: 'Product 4',
+    price: 60,
+    deadline: '2024-06-16',
+    shippingDate: '2024-06-21',
+    image: '../../assets/images/product-4.jpeg',
+  },
+  {
+    id: '5',
+    name: 'Product 5',
+    price: 60,
+    deadline: '2024-06-16',
+    shippingDate: '2024-06-21',
+    image: '../../assets/images/product-1.jpeg',
+  },
+  {
+    id: '6',
+    name: 'Product 6',
+    price: 60,
+    deadline: '2024-06-16',
+    shippingDate: '2024-06-21',
+    image: '../../assets/images/product-2.jpeg',
+  },
+  {
+    id: '7',
+    name: 'Product 7',
+    price: 60,
+    deadline: '2024-06-16',
+    shippingDate: '2024-06-21',
+    image: '../../assets/images/product-3.jpeg',
+  },
+  {
+    id: '8',
+    name: 'Product 8',
+    price: 60,
+    deadline: '2024-06-16',
+    shippingDate: '2024-06-21',
+    image: '../../assets/images/product-4.jpeg',
+  },
+  // Tambahkan data dummy lainnya...
+];
+
+export default function HomePage() {
+  return (
+    <ScrollView style={styles.container}>
+      {/* Container 1 */}
+      <View style={styles.container1} />
+
+      {/* Container 2 */}
+      <View style={styles.container2}>
+        <Text style={styles.title}>Jelajahi Dunia</Text>
+        <ScrollView horizontal contentContainerStyle={styles.filterContainer} showsHorizontalScrollIndicator={false}>
+          {['Filter 1', 'Filter 2', 'Filter 3', 'Filter 4', 'Filter 5'].map((filter, index) => (
+            <View key={index} style={styles.filter}>
+              <Button key={index} title={filter} onPress={() => {}} />
+            </View>
+          ))}
+        </ScrollView>
+        {/* <ScrollView horizontal contentContainerStyle={styles.productContainer} showsHorizontalScrollIndicator={false}>
+          {products.map((product) => (
+            <View key={product.id} style={styles.productCard}>
+              <Text>{product.name}</Text>
+            </View>
+          ))}
+        </ScrollView> */}
+        <FlatList
+        data={dummyData}
+        keyExtractor={(item) => item.id}
+        horizontal
+        renderItem={({ item }) => <ProductCard product={item} />} // Gunakan komponen ProductCard untuk setiap item dalam FlatList
+        contentContainerStyle={styles.productList}
+      />
+      </View>
+
+      {/* Container 3 */}
+      <View style={styles.container2}>
+        <Text style={styles.title}>Keliling Indonesia</Text>
+        <ScrollView horizontal contentContainerStyle={styles.filterContainer}>
+          {['Filter 1', 'Filter 2', 'Filter 3', 'Filter 4', 'Filter 5'].map((filter, index) => (
+            <View key={index} style={styles.filter}>
+              <Button key={index} title={filter} onPress={() => {}} />
+            </View>
+          ))}
+        </ScrollView>
+        <ScrollView horizontal contentContainerStyle={styles.productContainer}>
+          {products.map((product) => (
+            <View key={product.id} style={styles.productCard}>
+              <Text>{product.name}</Text>
+            </View>
+          ))}
+        </ScrollView>
+      </View>
+
+      {/* Container 4 */}
+      <View style={styles.container4}>
+        <Text style={styles.title}>Produk lainnya</Text>
+        <FlatList
+          data={products}
+          keyExtractor={(item) => item.id}
+          numColumns={2}
+          renderItem={({ item }) => (
+            <View style={styles.productCardColumn}>
+              <Text>{item.name}</Text>
+            </View>
+          )}
+        />
+      </View>
+    </ScrollView>
+  );
+};
