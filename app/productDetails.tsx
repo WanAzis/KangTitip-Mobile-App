@@ -51,6 +51,7 @@
 // });
 
 import { COLORS, SIZES } from '@/constants';
+import { FontAwesome } from '@expo/vector-icons';
 import React from 'react';
 import { View, Text, Image, StyleSheet, Pressable, ScrollView } from 'react-native';
 
@@ -79,18 +80,24 @@ const ProductDetails = () => {
               <Text style={styles.name}>{product.name}</Text>
             </View>
             <Pressable>
-              <Text style={styles.saveIcon}>💾</Text>
+              <FontAwesome size={30} style={{ marginBottom: -3 }} name='bookmark-o' color={COLORS.primary}/>
             </Pressable>
           </View>
           <View style={styles.divider} />
           <View style={styles.dates}>
-            <View>
-              <Text style={styles.dateText}>Batas Pemesanan:</Text>
-              <Text style={styles.dateInfo}>{product.deadline}</Text>
+            <View style={styles.dateRow}>
+              <FontAwesome size={28} style={{ marginBottom: -3 }} name='clock-o' color={COLORS.primary}/>
+              <View style={{marginLeft:SIZES.small}}>
+                <Text style={styles.dateText}>Batas Pemesanan:</Text>
+                <Text style={styles.dateInfo}>{product.deadline}</Text>
+              </View>
             </View>
-            <View>
+            <View style={styles.dateRow}>
+            <FontAwesome size={28} style={{ marginBottom: -3 }} name='calendar' color={COLORS.primary}/>
+              <View style={{marginLeft:SIZES.small}}>
               <Text style={styles.dateText}>Produk Dikirim:</Text>
               <Text style={styles.dateInfo}>{product.shippingDate}</Text>
+              </View>
             </View>
           </View>
           <View style={styles.divider} />
@@ -164,6 +171,10 @@ const styles = StyleSheet.create({
   dateInfo: {
     fontSize: SIZES.medium,
     fontWeight: '800'
+  },
+  dateRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   jastiperInfo: {
     fontSize: SIZES.large,
