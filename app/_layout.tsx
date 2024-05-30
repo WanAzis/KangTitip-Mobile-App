@@ -5,6 +5,7 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
+import { COLORS, SIZES } from '@/constants';
 
 import { useColorScheme } from '@/components/useColorScheme';
 
@@ -22,8 +23,17 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+
   const [loaded, error] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    SegoeRegular: require('../assets/fonts/Segoe-UI.ttf'),
+    SegoeBold: require('../assets/fonts/Segoe-UI-Bold.ttf'),
+    SegoeItalic: require('../assets/fonts/Segoe-UI-Italic.ttf'),
+    SegoeBoldItalic: require('../assets/fonts/Segoe-UI-Bold-Italic.ttf'),
+    InterRegular: require('../assets/fonts/Inter-Regular.otf'),
+    InterBold: require('../assets/fonts/Inter-Bold.otf'),
+    InterItalic: require('../assets/fonts/Inter-Italic.otf'),
+    InterBoldItalic: require('../assets/fonts/Inter-Bold-Italic.otf'),
     ...FontAwesome.font,
   });
 
@@ -52,7 +62,66 @@ function RootLayoutNav() {
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+        <Stack.Screen 
+          name="productDetails"
+          // component={NotifScreen}
+          options={{ 
+            presentation: 'modal', 
+            headerTitle: 'Product Details',
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTintColor: COLORS.offwhite,
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            }
+          }}
+        />
+        <Stack.Screen 
+          name="cart"
+          // component={NotifScreen}
+          options={{ 
+            presentation: 'modal', 
+            headerTitle: 'Cart',
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTintColor: COLORS.offwhite,
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            }
+          }}
+        />
+        <Stack.Screen 
+          name="chat"
+          // component={NotifScreen}
+          options={{ 
+            presentation: 'modal', 
+            headerTitle: 'Chat',
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTintColor: COLORS.offwhite,
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            }
+          }}
+        />
+        <Stack.Screen 
+          name="notification"
+          // component={NotifScreen}
+          options={{ 
+            presentation: 'modal', 
+            headerTitle: 'Notification',
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTintColor: COLORS.offwhite,
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            }
+          }}
+        />
       </Stack>
     </ThemeProvider>
   );

@@ -3,11 +3,12 @@ import { Platform, StyleSheet } from 'react-native';
 
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/constants/Themed';
+import { MonoText } from '@/components/StyledText';
 
-export default function ModalScreen() {
+export default function ChatScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Modal</Text>
+      <MonoText style={styles.title}>Modal</MonoText>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <EditScreenInfo path="app/modal.tsx" />
 
