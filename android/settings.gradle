@@ -1,4 +1,4 @@
-rootProject.name = 'KangTitip_Mobile_App'
+rootProject.name = 'KangTitip'
 
 dependencyResolutionManagement {
   versionCatalogs {
