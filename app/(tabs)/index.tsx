@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, Text } from '@/constants/Themed';
 // import { SliderBox } from 'react-native-image-slider-box'
-import styles from './index.style';
+// import styles from './index.style';
+import { StyleSheet } from "react-native";
+import { COLORS, SIZES } from '@/constants';
 import { FlatList, Image, ScrollView } from 'react-native';
 import ProductCard from '@/components/ProductCard';
 
@@ -79,6 +81,79 @@ const dummyData = [
   // Tambahkan data dummy lainnya...
 ];
 
+type Country = {
+  id: string;
+  name: string;
+  flag: string;
+};
+
+type CountryProps = {
+  country: Country;
+};
+
+const countryData = [
+  {
+    id: '1',
+    name: 'Indonesia',
+    flag: 'https://img.icons8.com/?size=100&id=lph_obIfg-jT&format=png&color=000000',
+  },
+  {
+    id: '2',
+    name: 'Malaysia',
+    flag: 'https://img.icons8.com/?size=100&id=nQtyhesxmxhM&format=png&color=000000',
+  },
+  {
+    id: '3',
+    name: 'Singapore',
+    flag: 'https://img.icons8.com/?size=100&id=8H-8FMObN4vB&format=png&color=000000',
+  },
+  {
+    id: '4',
+    name: 'Thailand',
+    flag: 'https://img.icons8.com/?size=100&id=IWVDTvmUNsig&format=png&color=000000',
+  },
+  {
+    id: '5',
+    name: 'Vietnam',
+    flag: 'https://img.icons8.com/?size=100&id=60257&format=png&color=000000',
+  },
+  {
+    id: '6',
+    name: 'Philippines',
+    flag: 'https://img.icons8.com/?size=100&id=15530&format=png&color=000000',
+  },
+  {
+    id: '7',
+    name: 'Myanmar',
+    flag: 'https://img.icons8.com/?size=100&id=15530&format=png&color=000000',
+  },
+  {
+    id: '8',
+    name: 'Brunei',
+    flag: 'https://img.icons8.com/?size=100&id=60221&format=png&color=000000',
+  },
+  {
+    id: '9',
+    name: 'Cambodia',
+    flag: 'https://img.icons8.com/?size=100&id=j8AsAniVuzYv&format=png&color=000000',
+  },
+  {
+    id: '10',
+    name: 'Laos',
+    flag: 'https://img.icons8.com/?size=100&id=2ui1n4CYeion&format=png&color=000000',
+  },
+]
+
+// Flag component
+const Flag: React.FC<CountryProps> = ({country}) => {
+  return(
+    <View style={[{flexDirection: 'row', alignItems: 'center', columnGap: 5, marginLeft: 5, padding: 5, paddingBottom: 5, borderRadius: 25, minHeight: 25, backgroundColor: '#D9D9D9'}]}>
+      <Image source={{uri: country.flag}} style={{width: 20, height: 20, borderWidth: 2, borderRadius: 10}}/>
+      <Text style={{fontSize: 11, textAlign: 'center', textAlignVertical: 'center'}}>{country.name}</Text>
+    </View>
+  );
+}
+
 export default function HomePage() {
   const slides = [
     '../../assets/images/product-1.jpeg',
@@ -99,6 +174,13 @@ export default function HomePage() {
         <View style={styles.titleRow}>
           <Text style={styles.title}>Jelajahi Dunia</Text>
         </View>
+          <FlatList
+          data={countryData}
+          renderItem={({ item }) => <Flag country={item} />}
+          keyExtractor={(item) => item.id}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+        />
         <View style={styles.productRow}>
           <FlatList
             data={dummyData}
@@ -110,10 +192,17 @@ export default function HomePage() {
           />
         </View>
       </View>
-      <View style={styles.container1}>
+      <View style={[styles.container1,{marginTop:-5}]}>
         <View style={styles.titleRow}>
           <Text style={styles.title}>Keliling Indonesia</Text>
         </View>
+          <FlatList
+            data={countryData}
+            renderItem={({ item }) => <Flag country={item} />}
+            keyExtractor={(item) => item.id}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+          />
         <View style={styles.productRow}>
           <FlatList
             data={dummyData}
@@ -139,3 +228,45 @@ export default function HomePage() {
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    color: COLORS.offwhite,
+  },
+  sliderContainer: {
+    alignSelf: "center",
+    justifyContent: "center",
+    marginTop: SIZES.medium,
+    width: 350,
+    height: 150,
+    backgroundColor: COLORS.offwhite,
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    borderRadius: SIZES.small,
+  },
+  container1: {
+    marginTop: SIZES.large,
+    marginLeft: SIZES.medium,
+    backgroundColor: COLORS.offwhite,
+  },
+  container2: {
+    marginLeft: SIZES.medium,
+    backgroundColor: COLORS.offwhite,
+  },
+  title: {
+    fontSize: SIZES.xLarge,
+    fontWeight: "bold",
+    color: COLORS.green,
+    backgroundColor: COLORS.offwhite,
+  },
+  titleRow: {
+    marginBottom: SIZES.medium,
+  },
+  productRow: {
+    marginVertical: SIZES.medium,
+    backgroundColor: COLORS.offwhite,
+  }
+});

@@ -301,7 +301,7 @@ const Flag: React.FC<CountryProps> = ({country}) => {
 const Jastiper: React.FC<JastiperProps> = ({ jastiper }) => {
   const moveToPage = (page: string) => {
     // Handle button press
-    router.replace(page);
+    router.push(page);
   };
 
   const colors = [
@@ -352,7 +352,7 @@ const Jastiper: React.FC<JastiperProps> = ({ jastiper }) => {
     {/* titip and chat jastiper */}
     <View style={{flexDirection: 'row', columnGap: 10, alignItems: 'center', alignSelf: 'center'}}>
       <MaterialIcons name="chat" size={36} color="#4A8FE1" />
-      <Pressable style={{flex: 1, borderRadius: 15, backgroundColor: '#4A8FE1'}} onPress={() => moveToPage('requestForm')}>
+      <Pressable style={{flex: 1, borderRadius: 15, backgroundColor: '#4A8FE1'}} onPress={() => moveToPage('/requestForm')}>
         <Text style={{textAlign: 'center', fontWeight: 'bold', color: 'white', padding: 10}}>Titip</Text>
       </Pressable>
     </View>

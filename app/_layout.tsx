@@ -122,6 +122,21 @@ function RootLayoutNav() {
             }
           }}
         />
+        <Stack.Screen 
+          name="requestForm"
+          // component={NotifScreen}
+          options={{ 
+            presentation: 'modal', 
+            headerTitle: 'Request Form',
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTintColor: COLORS.offwhite,
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            }
+          }}
+        />
       </Stack>
     </ThemeProvider>
   );
