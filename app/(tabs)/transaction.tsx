@@ -191,6 +191,7 @@ const ProductOrdered = () => {
         <Text>3 Produk</Text>
         <Text style={{fontWeight: 'bold', color: '#1188AE'}}>total: Rp210.000</Text>
       </View> 
+      {/* separator line */}
       <View style={styles.separator} />
       {/* status pesanan, chat + detail */}
       <View style={{flexDirection: 'row', alignSelf: 'stretch', justifyContent: 'space-between', alignItems: 'center'}}>

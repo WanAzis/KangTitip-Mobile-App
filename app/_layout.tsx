@@ -82,7 +82,7 @@ function RootLayoutNav() {
           // component={NotifScreen}
           options={{ 
             presentation: 'modal', 
-            headerTitle: 'Keranjang',
+            headerTitle: 'Keranjang(4)',
             headerStyle: {
               backgroundColor: COLORS.primary,
             },
