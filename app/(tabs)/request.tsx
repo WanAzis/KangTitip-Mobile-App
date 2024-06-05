@@ -4,6 +4,8 @@ import {
   ScrollView,
   FlatList,
   Image,
+  Touchable,
+  TouchableOpacity,
 } from "react-native";
 import {
   MaterialIcons,
@@ -47,6 +49,14 @@ const dummyData = [
     deadline: "2024-06-16",
     shippingDate: "2024-06-21",
     image: require("../../assets/images/product-3.jpeg"),
+  },
+  {
+    id: "4",
+    name: "Oven/Microwave Standard",
+    price: "735.000",
+    deadline: "2024-06-16",
+    shippingDate: "2024-06-21",
+    image: require("../../assets/images/product-4.jpeg"),
   },
 ];
 
@@ -230,16 +240,15 @@ export default function RequestScreen() {
             flexDirection: "row",
             height: 50,
             backgroundColor: "white",
-            borderTopWidth: 1,
           },
         ]}>
-        <Pressable
+        <TouchableOpacity
           style={[styles.container, { padding: 10 }]}
           onPress={() => handleActiveTab("Feed")}>
           <Text style={activeTab === "Feed" ? { fontWeight: "bold" } : {}}>
             Feed
           </Text>
-        </Pressable>
+        </TouchableOpacity>
         {/* add separator line */}
         <View
           style={{
@@ -249,14 +258,14 @@ export default function RequestScreen() {
             backgroundColor: "#D9D9D9",
           }}
         />
-        <Pressable
+        <TouchableOpacity
           style={[styles.container, { padding: 10 }]}
           onPress={() => handleActiveTab("Request-mu")}>
           <Text
             style={activeTab === "Request-mu" ? { fontWeight: "bold" } : {}}>
             Request-mu
           </Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
       {/* Conditional rendering of Feed and Request-mu components */}
       {activeTab === "Feed" ? <Feed /> : <RequestMu />}
@@ -272,7 +281,9 @@ const RequestMu = () => {
   const handleFilterRequest = (buttonName: SetStateAction<string>) => {
     setActiveButton(buttonName);
   };
+  
   const activeStyle = { backgroundColor: "#3A76BD", color: "white" };
+  const activeTextStyle = { color: "white" };
 
   return (
     <View
@@ -302,7 +313,7 @@ const RequestMu = () => {
             columnGap: 10,
             backgroundColor: "transparent",
           }}>
-          <Pressable
+          <TouchableOpacity
             style={{
               aspectRatio: 1,
               borderRadius: 1000,
@@ -310,8 +321,8 @@ const RequestMu = () => {
               padding: 5,
             }}>
             <Ionicons name="filter" size={16} color="#616161" />
-          </Pressable>
-          <Pressable
+          </TouchableOpacity>
+          <TouchableOpacity
             style={{
               aspectRatio: 1,
               borderRadius: 1000,
@@ -319,7 +330,7 @@ const RequestMu = () => {
               padding: 5,
             }}>
             <AntDesign name="filter" size={16} color="#616161" />
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </View>
       {/* Status Product Request */}
@@ -329,7 +340,7 @@ const RequestMu = () => {
           columnGap: 10,
           backgroundColor: "transparent",
         }}>
-        <Pressable
+        <TouchableOpacity
           style={[
             {
               backgroundColor: "#DFDFDF",
@@ -343,12 +354,12 @@ const RequestMu = () => {
           <Text
             style={[
               { color: "#8C8C8C" },
-              activeButton === "Diajukan" ? activeStyle : {},
+              activeButton === "Diajukan" ? activeTextStyle : {},
             ]}>
             Diajukan
           </Text>
-        </Pressable>
-        <Pressable
+        </TouchableOpacity>
+        <TouchableOpacity
           style={[
             {
               backgroundColor: "#DFDFDF",
@@ -362,12 +373,12 @@ const RequestMu = () => {
           <Text
             style={[
               { color: "#8C8C8C" },
-              activeButton === "Diterima" ? activeStyle : {},
+              activeButton === "Diterima" ? activeTextStyle : {},
             ]}>
             Diterima
           </Text>
-        </Pressable>
-        <Pressable
+        </TouchableOpacity>
+        <TouchableOpacity
           style={[
             {
               backgroundColor: "#DFDFDF",
@@ -381,18 +392,18 @@ const RequestMu = () => {
           <Text
             style={[
               { color: "#8C8C8C" },
-              activeButton === "Ditolak" ? activeStyle : {},
+              activeButton === "Ditolak" ? activeTextStyle : {},
             ]}>
             Ditolak
           </Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
       {/* Requested Products */}
       <FlatList
-        data={dummyData}
+        data={dummyData.slice(0, 3)}
         keyExtractor={(item) => item.id}
         numColumns={2}
-        renderItem={({ item }) => <ProductCard product={item} />}
+        renderItem={({ item }) => <ProductCard style={{marginHorizontal: 5}} product={item} />}
         showsVerticalScrollIndicator={false}
       />
     </View>
@@ -429,7 +440,7 @@ const Feed = () => {
             columnGap: 10,
             backgroundColor: "transparent",
           }}>
-          <Pressable
+          <TouchableOpacity
             style={{
               aspectRatio: 1,
               borderRadius: 1000,
@@ -437,8 +448,8 @@ const Feed = () => {
               padding: 5,
             }}>
             <Ionicons name="filter" size={16} color="#616161" />
-          </Pressable>
-          <Pressable
+          </TouchableOpacity>
+          <TouchableOpacity
             style={{
               aspectRatio: 1,
               borderRadius: 1000,
@@ -446,7 +457,7 @@ const Feed = () => {
               padding: 5,
             }}>
             <AntDesign name="filter" size={16} color="#616161" />
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </View>
       {/* filter location (national flags*/}
@@ -470,8 +481,17 @@ const Feed = () => {
 
 // Flag component
 const Flag: React.FC<CountryProps> = ({ country }) => {
+  const [activeFlag, setActiveFlag] = useState<string | null>(null);
+
+  const handleFlagPicker = (name: string | null) => {
+    setActiveFlag((prev) => (prev === name ? null : name));
+  };
+  
+  const activeStyle = { backgroundColor: "#3A76BD", color: "white" };
+  const activeTextStyle = { color: "white" };
+
   return (
-    <View
+    <TouchableOpacity
       style={[
         {
           flexDirection: "row",
@@ -484,20 +504,26 @@ const Flag: React.FC<CountryProps> = ({ country }) => {
           minHeight: 25,
           backgroundColor: "#D9D9D9",
         },
-      ]}>
+        activeFlag === country.name ? activeStyle : {},
+      ]}
+      onPress={() => handleFlagPicker(country.name)}
+      >
       <Image
         source={{ uri: country.flag }}
         style={{ width: 20, height: 20, borderWidth: 2, borderRadius: 10 }}
       />
       <Text
-        style={{
+        style={[{
           fontSize: 11,
           textAlign: "center",
           textAlignVertical: "center",
-        }}>
+        },
+        activeFlag === country.name ? activeTextStyle : {},
+        ]}
+      >
         {country.name}
       </Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -509,26 +535,9 @@ const Jastiper: React.FC<JastiperProps> = ({ jastiper }) => {
   };
 
   const colors = [
-    "#6A77ED",
-    "#ED6A6A",
-    "#6AED77",
-    "#776AED",
-    "#ED776A",
-    "#ED6AED",
-    "#77ED6A",
-    "#6AED77",
-    "#ED776A",
-    "#6A77ED",
-    "#77ED6A",
-    "#ED6A77",
-    "#776AED",
-    "#ED776A",
-    "#6AED77",
-    "#ED6AED",
-    "#77ED6A",
-    "#6AED77",
-    "#ED776A",
-    "#6A77ED",
+    "#6A77ED", "#ED6A6A", "#6AED77", "#776AED", "#ED776A", 
+    "#ED6AED", "#77ED6A", "#6AED77", "#ED776A", "#6A77ED", 
+    "#77ED6A", "#ED6A77", "#776AED", "#ED776A", "#6AED77"
   ];
 
   const RandomColorView = () => {
@@ -596,7 +605,7 @@ const Jastiper: React.FC<JastiperProps> = ({ jastiper }) => {
           alignSelf: "center",
         }}>
         <MaterialIcons name="chat" size={36} color="#4A8FE1" />
-        <Pressable
+        <TouchableOpacity
           style={{ flex: 1, borderRadius: 15, backgroundColor: "#4A8FE1" }}
           onPress={() => moveToPage("/requestForm")}>
           <Text
@@ -608,7 +617,7 @@ const Jastiper: React.FC<JastiperProps> = ({ jastiper }) => {
             }}>
             Titip
           </Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
     </View>
   );

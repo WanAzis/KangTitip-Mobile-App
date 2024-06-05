@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, ScrollView, FlatList, Image, TextInput} from 'react-native';
+import { Pressable, StyleSheet, ScrollView, FlatList, Image, TextInput, TouchableOpacity} from 'react-native';
 import { MaterialIcons, MaterialCommunityIcons, FontAwesome5, Ionicons, AntDesign } from '@expo/vector-icons';
 import { Text, View } from '@/constants/Themed';
 import { Picker } from '@react-native-picker/picker';
@@ -10,7 +10,7 @@ export default function RequestFormScreen() {
 
     const moveToPage = (page: string) => {
         // Handle button press
-        router.replace(page);
+        router.push(page);
     };
 
     return (
@@ -30,9 +30,12 @@ export default function RequestFormScreen() {
                     </View>
                 </View>
                 {/* tombol ganti */}
-                <Pressable style={{justifyContent: 'center', backgroundColor: '#4A8FE1', borderRadius: 10, paddingVertical: 5, paddingHorizontal: 25}}>
+                <TouchableOpacity 
+                    style={{justifyContent: 'center', backgroundColor: '#4A8FE1', borderRadius: 10, paddingVertical: 5, paddingHorizontal: 25}}
+                    onPress={() => moveToPage("/request")}
+                >
                     <Text style={{fontWeight: 'bold', color: 'white'}}>Ganti</Text>
-                </Pressable>
+                </TouchableOpacity>
             </View>
 
             {/* Form Request */}
@@ -44,7 +47,7 @@ export default function RequestFormScreen() {
                     placeholder="Tuliskan nama produk..."
                     secureTextEntry={false}
                     keyboardType="default"
-                    autoFocus={true}
+                    autoFocus={false}
                     onSubmitEditing={() => console.log('Submit button pressed')}
                     style={{ height: 40, backgroundColor: 'white', borderRadius: 10, paddingHorizontal: 10}}
                 />
@@ -56,7 +59,7 @@ export default function RequestFormScreen() {
                         placeholder="Terendah"
                         secureTextEntry={false}
                         keyboardType="default"
-                        autoFocus={true}
+                        autoFocus={false}
                         onSubmitEditing={() => console.log('Submit button pressed')}
                         style={{ height: 40, backgroundColor: 'white', borderRadius: 10, paddingHorizontal: 10, width: '48%'}}
                     />
@@ -65,7 +68,7 @@ export default function RequestFormScreen() {
                         placeholder="Tertinggi"
                         secureTextEntry={false}
                         keyboardType="default"
-                        autoFocus={true}
+                        autoFocus={false}
                         onSubmitEditing={() => console.log('Submit button pressed')}
                         style={{ height: 40, backgroundColor: 'white', borderRadius: 10, paddingHorizontal: 10, width: '48%'}}
                     />
@@ -77,7 +80,7 @@ export default function RequestFormScreen() {
                     placeholder="Tuliskan deskripsi produk..."
                     secureTextEntry={false}
                     keyboardType="default"
-                    autoFocus={true}
+                    autoFocus={false}
                     onSubmitEditing={() => console.log('Submit button pressed')}
                     style={{ textAlignVertical: 'top', height: 100, backgroundColor: 'white', borderRadius: 10, paddingHorizontal: 10, paddingTop: 10}}
                 />
@@ -115,12 +118,12 @@ export default function RequestFormScreen() {
                 </View>
 
                 {/* Tombol Request */}
-                <Pressable 
+                <TouchableOpacity 
                     style={{alignSelf: 'center', backgroundColor: '#4A8FE1', borderRadius: 10, marginTop: 10, paddingVertical: 10, paddingHorizontal: 50}}
-                    onPress={() => moveToPage("/request")}
+                    onPress={() => { moveToPage("/request"); console.log('Request button pressed'); }}
                 >
                     <Text style={{textAlign: 'center', fontWeight: 'bold', color: 'white'}}>Request</Text>
-                </Pressable>
+                </TouchableOpacity>
             </View>
         </View>
     );

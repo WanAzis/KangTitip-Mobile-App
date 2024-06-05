@@ -1,7 +1,8 @@
 import { COLORS, SIZES } from '@/constants';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { View, Text, Image, StyleSheet, Pressable, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable, TouchableOpacity, StyleProp } from 'react-native';
 
 interface Product {
   name: string;
@@ -13,9 +14,10 @@ interface Product {
 
 interface ProductCardProps {
   product: Product;
+  style: any;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, style }) => {
   const router = useRouter();
 
   const handlePress = () => {
@@ -23,7 +25,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   };
 
   return (
-    <TouchableOpacity onPress={handlePress} style={styles.productCard}>
+    <TouchableOpacity onPress={handlePress} style={[styles.productCard, style]}>
       <View style={styles.imageWrapper}>
         <Image
             source={product.image}
@@ -31,12 +33,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           />
       </View>
       <View style={styles.productDetail}>
-        <Text style={styles.productName}>{product.name}</Text>
-        <Text style={styles.productPrice}>Rp{product.price}</Text>
+        <Text numberOfLines={1} ellipsizeMode='tail' style={styles.productName}>{product.name}</Text>
+        <Text numberOfLines={1} ellipsizeMode='tail' style={styles.productPrice}>Rp{product.price}</Text>
       </View>
       <View style={styles.dateContainer}>
-        <Text style={styles.date}>{product.deadline}</Text>
-        <Text style={styles.date}>{product.shippingDate}</Text>
+        <View style={{ flexDirection: "row", alignItems: "center", columnGap: 5 }}>
+          <MaterialCommunityIcons name="clock-outline" color="#1FBCED" />
+          <Text style={styles.date}>{product.deadline}</Text>
+        </View>
+        <View style={{ flexDirection: "row", alignItems: "center", columnGap: 5 }}>
+          <MaterialCommunityIcons name="truck-outline" color="#1FBCED" />
+          <Text style={styles.date}>{product.shippingDate}</Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -44,18 +52,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
 const styles = StyleSheet.create({
   productCard: {
-    width: 170,
-    height: 250,
+    flex: 1,
+    maxWidth: 170,
     backgroundColor: COLORS.white,
     borderWidth: 1,
     borderColor: COLORS.offwhite,
     borderRadius: 10,
     padding: 10,
     marginBottom: 20,
-    marginRight: SIZES.medium,
   },
   imageWrapper: {
-    flex: 1,
+    flex: 2,
     justifyContent: 'center',
     alignItems: 'center',
     // borderBottomWidth: 1,
@@ -66,6 +73,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
+    aspectRatio: 1,
     borderRadius: SIZES.small,
     // marginBottom: 10,
   },
@@ -76,6 +84,7 @@ const styles = StyleSheet.create({
   },
   productName: {
     fontSize: SIZES.medium,
+    textAlign: 'center',
     // alignSelf: 'center',
     // fontWeight: 'bold',
     marginBottom: 8,
@@ -83,6 +92,7 @@ const styles = StyleSheet.create({
   productPrice: {
     fontSize: SIZES.medium,
     marginBottom: 10,
+    textAlign: 'center',
     fontWeight: 'bold',
     color: COLORS.ligthGreen,
   },
@@ -91,7 +101,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   date: {
-    fontSize: 10,
+    fontSize: 8,
   },
 });
 
