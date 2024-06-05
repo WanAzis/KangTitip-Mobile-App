@@ -1,5 +1,4 @@
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import * as firebase from "firebase";
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -12,9 +11,14 @@ const firebaseConfig = {
     measurementId: "G-76B7Q0S7R9"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+let app;
+if (firebase.apps.length === 0) {
+  app = firebase.initializeApp(firebaseConfig);
+} else {
+  app = firebase.app()
+}
 
-export { db };
-// For more information on how to access Firebase in your project,
-// see the Firebase documentation: https://firebase.google.com/docs/web/setup#access-firebase
+const auth = firebase.auth()
+const db = firebase.getFirestore(app);
+
+export { db, auth };
