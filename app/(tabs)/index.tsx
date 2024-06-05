@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text } from "@/constants/Themed";
+import Swiper from 'react-native-swiper';
 // import { SliderBox } from 'react-native-image-slider-box'
 // import styles from './index.style';
-import { StyleSheet } from "react-native";
+import { SectionList, StyleSheet, TouchableOpacity } from "react-native";
 import { COLORS, SIZES } from "@/constants";
 import { FlatList, Image, ScrollView } from "react-native";
 import ProductCard from "@/components/ProductCard";
@@ -146,8 +147,17 @@ const countryData = [
 
 // Flag component
 const Flag: React.FC<CountryProps> = ({ country }) => {
+  const [activeFlag, setActiveFlag] = useState<string | null>(null);
+
+  const handleFlagPicker = (name: string | null) => {
+    setActiveFlag((prev) => (prev === name ? null : name));
+  };
+  
+  const activeStyle = { backgroundColor: "#3A76BD", color: "white" };
+  const activeTextStyle = { color: "white" };
+
   return (
-    <View
+    <TouchableOpacity
       style={[
         {
           flexDirection: "row",
@@ -160,20 +170,26 @@ const Flag: React.FC<CountryProps> = ({ country }) => {
           minHeight: 25,
           backgroundColor: "#D9D9D9",
         },
-      ]}>
+        activeFlag === country.name ? activeStyle : {},
+      ]}
+      onPress={() => handleFlagPicker(country.name)}
+      >
       <Image
         source={{ uri: country.flag }}
         style={{ width: 20, height: 20, borderWidth: 2, borderRadius: 10 }}
       />
       <Text
-        style={{
+        style={[{
           fontSize: 11,
           textAlign: "center",
           textAlignVertical: "center",
-        }}>
+        },
+        activeFlag === country.name ? activeTextStyle : {},
+        ]}
+      >
         {country.name}
       </Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -185,33 +201,53 @@ export default function HomePage() {
     "../../assets/images/product-4.jpeg",
   ];
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
+    <ScrollView nestedScrollEnabled={true} showsVerticalScrollIndicator={false} style={styles.container}>
       <View style={styles.sliderContainer}></View>
       <View style={styles.imageContainer}>
-        {/* <SliderBox images={slides} */}
-        <Image
-          source={require("../../assets/images/cover.png")}
-          style={styles.image}
-        />
+        {/* sliding images */}
+        <Swiper
+          autoplay={true}
+          autoplayTimeout={3}
+          dotStyle={{
+            backgroundColor: 'rgba(0,0,0,.2)', 
+            borderRadius: 5,
+            width: 8,
+            height: 8,
+            bottom: -40
+          }}
+          activeDotStyle={{
+            backgroundColor: '#007aff', 
+            borderRadius: 5,
+            width: 30,
+            height: 8,
+            bottom: -40
+          }}
+        >
+          <Image source={require("../../assets/images/cover1.png")} style={styles.image} />
+          <Image source={require("../../assets/images/cover2.png")} style={styles.image} />
+          <Image source={require("../../assets/images/cover3.png")} style={styles.image} />
+        </Swiper>
       </View>
       <View style={styles.container1}>
         <View style={styles.titleRow}>
           <Text style={styles.title}>Jelajahi Dunia</Text>
         </View>
-        <FlatList
-          data={countryData}
-          renderItem={({ item }) => <Flag country={item} />}
-          keyExtractor={(item) => item.id}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-        />
+        <View style={{ backgroundColor: 'transparent' }}>
+          <FlatList
+            data={countryData}
+            renderItem={({ item }) => <Flag country={item} />}
+            keyExtractor={(item) => item.id}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+          />
+        </View>
         <View style={styles.productRow}>
           <FlatList
             data={dummyData}
             keyExtractor={(item) => item.id}
             horizontal
             showsHorizontalScrollIndicator={false}
-            renderItem={({ item }) => <ProductCard product={item} />} // Gunakan komponen ProductCard untuk setiap item dalam FlatList
+            renderItem={({ item }) => <ProductCard style={styles.smallProductCard} product={item} />} // Gunakan komponen ProductCard untuk setiap item dalam FlatList
             // contentContainerStyle={styles.productList}
           />
         </View>
@@ -220,20 +256,22 @@ export default function HomePage() {
         <View style={styles.titleRow}>
           <Text style={styles.title}>Keliling Indonesia</Text>
         </View>
-        <FlatList
-          data={countryData}
-          renderItem={({ item }) => <Flag country={item} />}
-          keyExtractor={(item) => item.id}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-        />
+        <View style={{ backgroundColor: 'transparent' }}>
+          <FlatList
+            data={countryData}
+            renderItem={({ item }) => <Flag country={item} />}
+            keyExtractor={(item) => item.id}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+          />
+        </View>
         <View style={styles.productRow}>
           <FlatList
             data={dummyData}
             keyExtractor={(item) => item.id}
             horizontal
             showsHorizontalScrollIndicator={false}
-            renderItem={({ item }) => <ProductCard product={item} />} // Gunakan komponen ProductCard untuk setiap item dalam FlatList
+            renderItem={({ item }) => <ProductCard style={styles.smallProductCard} product={item} />} // Gunakan komponen ProductCard untuk setiap item dalam FlatList
             // contentContainerStyle={styles.productList}
           />
         </View>
@@ -245,7 +283,8 @@ export default function HomePage() {
             data={dummyData}
             keyExtractor={(item) => item.id}
             numColumns={2}
-            renderItem={({ item }) => <ProductCard product={item} />}
+            renderItem={({ item }) => <ProductCard style={styles.productCard} product={item} />} // Gunakan komponen ProductCard untuk setiap item dalam FlatList
+            // contentContainerStyle={styles.productList}
           />
         </View>
       </View>
@@ -254,6 +293,28 @@ export default function HomePage() {
 }
 
 const styles = StyleSheet.create({
+  productCard: {
+    flex: 1,
+    maxWidth: 170,
+    backgroundColor: COLORS.white,
+    borderWidth: 1,
+    borderColor: COLORS.offwhite,
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 20,
+    marginRight: SIZES.medium,
+  },
+  smallProductCard: {
+    flex: 1,
+    maxWidth: 150,
+    backgroundColor: COLORS.white,
+    borderWidth: 1,
+    borderColor: COLORS.offwhite,
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 20,
+    marginRight: SIZES.medium,
+  },
   container: {
     flex: 1,
     color: COLORS.offwhite,
@@ -297,7 +358,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: COLORS.green,
     backgroundColor: COLORS.offwhite,
-    fontFamily: SegoeRegular,
+    fontFamily: 'SegoeRegular',
   },
   titleRow: {
     marginBottom: SIZES.medium,

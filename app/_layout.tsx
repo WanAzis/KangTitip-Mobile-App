@@ -82,14 +82,15 @@ function RootLayoutNav() {
           // component={NotifScreen}
           options={{ 
             presentation: 'modal', 
-            headerTitle: 'Cart',
+            headerTitle: 'Keranjang',
             headerStyle: {
               backgroundColor: COLORS.primary,
             },
             headerTintColor: COLORS.offwhite,
             headerTitleStyle: {
               fontWeight: 'bold',
-            }
+            },
+            headerTitleAlign: 'center'
           }}
         />
         <Stack.Screen 

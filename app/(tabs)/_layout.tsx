@@ -1,7 +1,9 @@
 import React from "react";
+import { Image } from 'react-native'
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Link, Tabs } from "expo-router";
-import { Pressable, View } from "react-native";
+import { Pressable, TextInput, View } from "react-native";
 
 import Colors from "@/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
@@ -35,97 +37,28 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          headerTitle: "Home",
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          headerTitle: () => (
+            <Image
+              source={require('../../assets/images/whiteIcon.png')}
+              style={{ width: 30, height: 30 }}
+            />
+          ),
           headerRight: () => (
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Link href="/chat" asChild>
-                <Pressable>
-                  {({ pressed }) => (
-                    <FontAwesome
-                      name="commenting"
-                      size={20}
-                      color={COLORS.white}
-                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                    />
-                  )}
-                </Pressable>
-              </Link>
-              <Link href="/cart" asChild>
-                <Pressable>
-                  {({ pressed }) => (
-                    <FontAwesome
-                      name="shopping-cart"
-                      size={20}
-                      color={COLORS.white}
-                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                    />
-                  )}
-                </Pressable>
-              </Link>
-              <Link href="/notification" asChild>
-                <Pressable>
-                  {({ pressed }) => (
-                    <FontAwesome
-                      name="bell"
-                      size={20}
-                      color={COLORS.white}
-                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                    />
-                  )}
-                </Pressable>
-              </Link>
-            </View>
+            <SearchHeader/>
           ),
         }}
       />
       <Tabs.Screen
         name="saved"
         options={{
-          headerTitle: "Saved",
+          headerTitle: "Produk Disimpan",
           // title: 'Saved',
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="bookmark-o" color={color} />
           ),
           headerRight: () => (
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Link href="/chat" asChild>
-                <Pressable>
-                  {({ pressed }) => (
-                    <FontAwesome
-                      name="commenting"
-                      size={20}
-                      color={COLORS.white}
-                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                    />
-                  )}
-                </Pressable>
-              </Link>
-              <Link href="/cart" asChild>
-                <Pressable>
-                  {({ pressed }) => (
-                    <FontAwesome
-                      name="shopping-cart"
-                      size={20}
-                      color={COLORS.white}
-                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                    />
-                  )}
-                </Pressable>
-              </Link>
-              <Link href="/notification" asChild>
-                <Pressable>
-                  {({ pressed }) => (
-                    <FontAwesome
-                      name="bell"
-                      size={20}
-                      color={COLORS.white}
-                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                    />
-                  )}
-                </Pressable>
-              </Link>
-            </View>
+            <Header/>
           ),
         }}
       />
@@ -136,94 +69,24 @@ export default function TabLayout() {
           title: "Transaction",
           tabBarIcon: ({ color }) => <TabBarIcon name="tags" color={color} />,
           headerRight: () => (
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Link href="/chat" asChild>
-                <Pressable>
-                  {({ pressed }) => (
-                    <FontAwesome
-                      name="commenting"
-                      size={20}
-                      color={COLORS.white}
-                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                    />
-                  )}
-                </Pressable>
-              </Link>
-              <Link href="/cart" asChild>
-                <Pressable>
-                  {({ pressed }) => (
-                    <FontAwesome
-                      name="shopping-cart"
-                      size={20}
-                      color={COLORS.white}
-                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                    />
-                  )}
-                </Pressable>
-              </Link>
-              <Link href="/notification" asChild>
-                <Pressable>
-                  {({ pressed }) => (
-                    <FontAwesome
-                      name="bell"
-                      size={20}
-                      color={COLORS.white}
-                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                    />
-                  )}
-                </Pressable>
-              </Link>
-            </View>
+            <Header/>
           ),
         }}
       />
       <Tabs.Screen
         name="request"
         options={{
-          headerTitle: "Request",
-          title: "Request",
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="sticky-note-o" color={color} />
+            <MaterialCommunityIcons name="message-plus" size={24} color={color} />
+          ),
+          headerTitle: () => (
+            <Image
+              source={require('../../assets/images/whiteIcon.png')}
+              style={{ width: 30, height: 30 }}
+            />
           ),
           headerRight: () => (
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Link href="/chat" asChild>
-                <Pressable>
-                  {({ pressed }) => (
-                    <FontAwesome
-                      name="commenting"
-                      size={20}
-                      color={COLORS.white}
-                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                    />
-                  )}
-                </Pressable>
-              </Link>
-              <Link href="/cart" asChild>
-                <Pressable>
-                  {({ pressed }) => (
-                    <FontAwesome
-                      name="shopping-cart"
-                      size={20}
-                      color={COLORS.white}
-                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                    />
-                  )}
-                </Pressable>
-              </Link>
-              <Link href="/notification" asChild>
-                <Pressable>
-                  {({ pressed }) => (
-                    <FontAwesome
-                      name="bell"
-                      size={20}
-                      color={COLORS.white}
-                      style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                    />
-                  )}
-                </Pressable>
-              </Link>
-            </View>
+            <SearchHeader/>
           ),
         }}
       />
@@ -237,5 +100,112 @@ export default function TabLayout() {
         }}
       />
     </Tabs>
+  );
+}
+
+const SearchHeader: React.FC = () => {
+  return (
+    <View style={{position: 'absolute', left: 0, right: 0, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <FontAwesome style={{position: 'absolute', zIndex: 10, left: 10}} name="search" size={20} color="#B2B2B2" />
+        <TextInput
+          onChangeText={(text) => console.log(text)}
+          placeholder="Telusuri produk..."
+          secureTextEntry={false}
+          keyboardType="default"
+          autoFocus={false}
+          onSubmitEditing={() => console.log('Submit button pressed')}
+          style={{ 
+            height: 30,
+            width: 175,
+            backgroundColor: 'white', 
+            borderRadius: 25, 
+            paddingHorizontal: 10,
+            paddingLeft: 35,
+          }}
+        />
+      </View>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <Link href="/chat" asChild>
+          <Pressable>
+            {({ pressed }) => (
+              <FontAwesome
+                name="commenting"
+                size={20}
+                color={COLORS.white}
+                style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+              />
+            )}
+          </Pressable>
+        </Link>
+        <Link href="/cart" asChild>
+          <Pressable>
+            {({ pressed }) => (
+              <FontAwesome
+                name="shopping-cart"
+                size={20}
+                color={COLORS.white}
+                style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+              />
+            )}
+          </Pressable>
+        </Link>
+        <Link href="/notification" asChild>
+          <Pressable>
+            {({ pressed }) => (
+              <FontAwesome
+                name="bell"
+                size={20}
+                color={COLORS.white}
+                style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+              />
+            )}
+          </Pressable>
+        </Link>
+      </View>
+    </View>
+  );
+}
+
+const Header: React.FC = () => {
+  return(
+    <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <Link href="/chat" asChild>
+        <Pressable>
+          {({ pressed }) => (
+            <FontAwesome
+              name="commenting"
+              size={20}
+              color={COLORS.white}
+              style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+            />
+          )}
+        </Pressable>
+      </Link>
+      <Link href="/cart" asChild>
+        <Pressable>
+          {({ pressed }) => (
+            <FontAwesome
+              name="shopping-cart"
+              size={20}
+              color={COLORS.white}
+              style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+            />
+          )}
+        </Pressable>
+      </Link>
+      <Link href="/notification" asChild>
+        <Pressable>
+          {({ pressed }) => (
+            <FontAwesome
+              name="bell"
+              size={20}
+              color={COLORS.white}
+              style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+            />
+          )}
+        </Pressable>
+      </Link>
+    </View>
   );
 }
