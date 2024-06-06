@@ -5,6 +5,7 @@ import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/constants/Themed';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useState } from 'react';
+import { router } from 'expo-router';
 
 export default function CartScreen() {
   const products = [1, 2, 3, 4, 5];
@@ -61,6 +62,7 @@ export default function CartScreen() {
                 paddingVertical: 10,
                 borderRadius: 10,
               }}
+              onPress={() => router.push('/checkout')}
             >
               <Text style={{fontWeight: 'bold', color: 'white'}}>Titip</Text>
             </TouchableOpacity>

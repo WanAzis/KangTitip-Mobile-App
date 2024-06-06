@@ -93,6 +93,22 @@ function RootLayoutNav() {
             headerTitleAlign: 'center'
           }}
         />
+                <Stack.Screen 
+          name="checkout"
+          // component={NotifScreen}
+          options={{ 
+            presentation: 'modal', 
+            headerTitle: 'Detail Pesanan',
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTintColor: COLORS.offwhite,
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+            headerTitleAlign: 'center'
+          }}
+        />
         <Stack.Screen 
           name="chat"
           // component={NotifScreen}
