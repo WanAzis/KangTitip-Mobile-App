@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text } from "@/constants/Themed";
 import Swiper from 'react-native-swiper';
 // import { SliderBox } from 'react-native-image-slider-box'
@@ -7,6 +7,7 @@ import { SectionList, StyleSheet, TouchableOpacity } from "react-native";
 import { COLORS, SIZES } from "@/constants";
 import { FlatList, Image, ScrollView } from "react-native";
 import ProductCard from "@/components/ProductCard";
+import fetchProducts from 
 
 // // Data dummy untuk produk
 // // const products = Array.from({ length: 10 }, (_, index) => ({
@@ -193,13 +194,33 @@ const Flag: React.FC<CountryProps> = ({ country }) => {
   );
 };
 
+// type Product = {
+//   id: string;
+//   nama: string;
+//   asalNegara: string;
+//   harga: number;
+//   deadline: string;
+//   shippingDate: string;
+//   toko: string;
+//   kategori: string;
+//   berat: string;
+//   deskripsi: string;
+//   foto: string;
+// };
+
 export default function HomePage() {
-  const slides = [
-    "../../assets/images/product-1.jpeg",
-    "../../assets/images/product-2.jpeg",
-    "../../assets/images/product-3.jpeg",
-    "../../assets/images/product-4.jpeg",
-  ];
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      const productsData = await fetchProducts();
+      setProducts(productsData);
+    };
+    loadProducts();
+  }, []);
+
+  console.log(products);
+
   return (
     <ScrollView nestedScrollEnabled={true} showsVerticalScrollIndicator={false} style={styles.container}>
       <View style={styles.sliderContainer}></View>
@@ -247,7 +268,7 @@ export default function HomePage() {
             keyExtractor={(item) => item.id}
             horizontal
             showsHorizontalScrollIndicator={false}
-            renderItem={({ item }) => <ProductCard style={styles.smallProductCard} product={item} />} // Gunakan komponen ProductCard untuk setiap item dalam FlatList
+            renderItem={({ item }) => <ProductCard key={item.id} style={styles.smallProductCard} product={item} />} // Gunakan komponen ProductCard untuk setiap item dalam FlatList
             // contentContainerStyle={styles.productList}
           />
         </View>
@@ -271,7 +292,7 @@ export default function HomePage() {
             keyExtractor={(item) => item.id}
             horizontal
             showsHorizontalScrollIndicator={false}
-            renderItem={({ item }) => <ProductCard style={styles.smallProductCard} product={item} />} // Gunakan komponen ProductCard untuk setiap item dalam FlatList
+            renderItem={({ item }) => <ProductCard key={item.id} style={styles.smallProductCard} product={item} />} // Gunakan komponen ProductCard untuk setiap item dalam FlatList
             // contentContainerStyle={styles.productList}
           />
         </View>
@@ -283,7 +304,7 @@ export default function HomePage() {
             data={dummyData}
             keyExtractor={(item) => item.id}
             numColumns={2}
-            renderItem={({ item }) => <ProductCard style={styles.productCard} product={item} />} // Gunakan komponen ProductCard untuk setiap item dalam FlatList
+            renderItem={({ item }) => <ProductCard key={item.id} style={styles.ProductCard} product={item} />} // Gunakan komponen ProductCard untuk setiap item dalam FlatList
             // contentContainerStyle={styles.productList}
           />
         </View>
@@ -291,6 +312,8 @@ export default function HomePage() {
     </ScrollView>
   );
 }
+
+// export default HomePage;
 
 const styles = StyleSheet.create({
   productCard: {

@@ -5,11 +5,16 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, Pressable, TouchableOpacity, StyleProp } from 'react-native';
 
 interface Product {
-  name: string;
-  price: string;
-  deadline: string;
-  shippingDate: string;
-  image: any;
+  id: string,
+  nama: string,
+  harga: number,
+  deadline: string,
+  shippingDate: string,
+  toko: string,
+  kategori: string,
+  berat: string,
+  deskripsi: string,
+  image: any
 }
 
 interface ProductCardProps {
@@ -18,6 +23,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, style }) => {
+// const ProductCard = ({ product, style }) => {  
   const router = useRouter();
 
   const handlePress = () => {
@@ -33,8 +39,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, style }) => {
           />
       </View>
       <View style={styles.productDetail}>
-        <Text numberOfLines={1} ellipsizeMode='tail' style={styles.productName}>{product.name}</Text>
-        <Text numberOfLines={1} ellipsizeMode='tail' style={styles.productPrice}>Rp{product.price}</Text>
+        <Text numberOfLines={1} ellipsizeMode='tail' style={styles.productName}>{product.nama}</Text>
+        <Text numberOfLines={1} ellipsizeMode='tail' style={styles.productPrice}>{`Rp$${product.harga}`}</Text>
       </View>
       <View style={styles.dateContainer}>
         <View style={{ flexDirection: "row", alignItems: "center", columnGap: 5 }}>
