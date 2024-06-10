@@ -6,14 +6,14 @@ import { View, Text, Image, StyleSheet, Pressable, TouchableOpacity, StyleProp }
 
 interface Product {
   id: string,
-  nama: string,
-  harga: number,
+  name: string,
+  price: string,
   deadline: string,
   shippingDate: string,
-  toko: string,
-  kategori: string,
-  berat: string,
-  deskripsi: string,
+  // toko: string,
+  // kategori: string,
+  // berat: string,
+  // deskripsi: string,
   image: any
 }
 
@@ -39,8 +39,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, style }) => {
           />
       </View>
       <View style={styles.productDetail}>
-        <Text numberOfLines={1} ellipsizeMode='tail' style={styles.productName}>{product.nama}</Text>
-        <Text numberOfLines={1} ellipsizeMode='tail' style={styles.productPrice}>{`Rp$${product.harga}`}</Text>
+        <Text numberOfLines={1} ellipsizeMode='tail' style={styles.productName}>{product.name}</Text>
+        <Text numberOfLines={1} ellipsizeMode='tail' style={styles.productPrice}>{`Rp$${product.price}`}</Text>
       </View>
       <View style={styles.dateContainer}>
         <View style={{ flexDirection: "row", alignItems: "center", columnGap: 5 }}>

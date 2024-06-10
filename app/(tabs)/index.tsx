@@ -7,7 +7,6 @@ import { SectionList, StyleSheet, TouchableOpacity } from "react-native";
 import { COLORS, SIZES } from "@/constants";
 import { FlatList, Image, ScrollView } from "react-native";
 import ProductCard from "@/components/ProductCard";
-import fetchProducts from 
 
 // // Data dummy untuk produk
 // // const products = Array.from({ length: 10 }, (_, index) => ({
@@ -209,17 +208,17 @@ const Flag: React.FC<CountryProps> = ({ country }) => {
 // };
 
 export default function HomePage() {
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    const loadProducts = async () => {
-      const productsData = await fetchProducts();
-      setProducts(productsData);
-    };
-    loadProducts();
-  }, []);
+  // useEffect(() => {
+  //   const loadProducts = async () => {
+  //     const productsData = await fetchProducts();
+  //     setProducts(productsData);
+  //   };
+  //   loadProducts();
+  // }, []);
 
-  console.log(products);
+  // console.log(products);
 
   return (
     <ScrollView nestedScrollEnabled={true} showsVerticalScrollIndicator={false} style={styles.container}>
@@ -304,7 +303,7 @@ export default function HomePage() {
             data={dummyData}
             keyExtractor={(item) => item.id}
             numColumns={2}
-            renderItem={({ item }) => <ProductCard key={item.id} style={styles.ProductCard} product={item} />} // Gunakan komponen ProductCard untuk setiap item dalam FlatList
+            renderItem={({ item }) => <ProductCard key={item.id} style={styles.productCard} product={item} />} // Gunakan komponen ProductCard untuk setiap item dalam FlatList
             // contentContainerStyle={styles.productList}
           />
         </View>
