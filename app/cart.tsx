@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Platform, ScrollView, StyleSheet, Image, Button, Touchable, TouchableOpacity } from 'react-native';
+import { Platform, ScrollView, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/constants/Themed';
@@ -22,6 +22,7 @@ export default function CartScreen() {
           {products.map((product, index) => (
             <ProductCart key={index} />
           ))}
+          <View style={{backgroundColor: 'transparent', height: 80}}></View>
         </ScrollView>
         {/* Final Cart and Titip button */}
         <View style={{
@@ -32,7 +33,7 @@ export default function CartScreen() {
           backgroundColor: 'white', 
           flexDirection: 'row', 
           justifyContent: 'space-between', 
-          alignItems: 'center', 
+          alignItems: 'center',
           paddingHorizontal: 20,
           borderTopWidth: 3,
           borderColor: 'rgba(0, 0, 0, 0.1)',
@@ -84,7 +85,7 @@ const ProductCart = () => {
     <View style={[styles.container, {marginBottom: 20, padding: 20, rowGap: 10}]}>
       {/* title and location */}
       <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', alignSelf: 'stretch'}}>
-        <Text style={{fontWeight: 'bold', fontSize: 12}}>Super Jastip</Text>
+        <Text style={{fontWeight: 'bold', fontSize: 14}}>Super Jastip</Text>
         {/* location */}
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Ionicons name="location-outline" size={20} color="#1556A4" />
@@ -114,7 +115,7 @@ const ProductCart = () => {
         </View>
         {/* trash button */}
         <TouchableOpacity style={{alignSelf: 'flex-end'}}>
-          <Ionicons name="trash-outline" size={21} color="#1556A4" />
+          <Ionicons name="trash-outline" size={21} color="#616161" />
         </TouchableOpacity>
         {/* add or minus amount */}
         <View style={{ flexDirection: 'row', alignSelf: 'flex-end', alignItems: 'center', columnGap: 8}}>
@@ -139,7 +140,7 @@ const ProductCart = () => {
       <View style={{flexDirection: 'row', alignSelf: 'stretch', alignItems: 'center', justifyContent: 'space-between'}}>
         <View style={{flexDirection: 'row', alignItems: 'center', columnGap: 5}}>
           <MaterialCommunityIcons name="clock-outline" size={18} color="#0047A0" />
-          <Text>Batas Pemesanan</Text>
+          <Text style={{fontWeight: 'regular', fontSize: 12}}>Batas Pemesanan</Text>
         </View>
         <Text style={{fontWeight: 'regular', fontSize: 12}}>12/05/2024 20:00 WIB</Text>
       </View>
@@ -152,7 +153,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     justifyContent: "center",
-    paddingBottom: 80,
     rowGap: 20,
     backgroundColor: "#F0F0F0",
   },
