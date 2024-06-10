@@ -4,7 +4,6 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Link, Tabs } from "expo-router";
 import { Pressable, TextInput, View } from "react-native";
-
 import Colors from "@/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";

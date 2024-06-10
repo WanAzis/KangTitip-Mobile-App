@@ -1,4 +1,15 @@
-// import * as firebase from "firebase";
+import { initializeApp } from "firebase/app";
+import { 
+  getFirestore,
+  collection,
+  getDocs,
+  addDoc,
+  onSnapshot,
+  doc,
+  deleteDoc,
+  updateDoc,
+  query,
+  where, } from "firebase/firestore";
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -11,14 +22,21 @@ const firebaseConfig = {
     measurementId: "G-76B7Q0S7R9"
 };
 
-let app;
-if (firebase.apps.length === 0) {
-  app = firebase.initializeApp(firebaseConfig);
-} else {
-  app = firebase.app()
-}
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
-const auth = firebase.auth()
-const db = firebase.getFirestore(app);
 
-export { db, auth };
+// Initialize Cloud Firestore and get a reference to the service
+const firestore = getFirestore(app);
+
+export { 
+  firestore, 
+  collection,
+  getDocs,
+  addDoc,
+  onSnapshot,
+  doc,
+  deleteDoc,
+  updateDoc,
+  query,
+  where, };
