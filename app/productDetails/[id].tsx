@@ -1,32 +1,103 @@
 
 import { COLORS, SIZES } from '@/constants';
 import { FontAwesome } from '@expo/vector-icons';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocalSearchParams, useSegments } from 'expo-router';
 import { View, Text, Image, StyleSheet, Pressable, ScrollView } from 'react-native';
+import { doc, firestore, getDoc } from '@/firebaseConfig';
+
+// Definisikan tipe untuk produk
+interface Product {
+  id: string,
+  nama: string,
+  asalNegara: string,
+  harga: number,
+  deadline: string,
+  shippingDate: string,
+  toko: string,
+  kategori: string,
+  berat: string,
+  deskripsi: string,
+  foto: string,
+}
 
 const ProductDetails = () => {
-  // Data statik produk
-  const product = {
-    image: require('../assets/images/product-1.jpeg'), // Ganti dengan path gambar yang sesuai
-    price: '350.000',
-    name: 'Proyektor Modern',
-    deadline: '01/06/2024',
-    shippingDate: '05/06/2024',
-    jastiperInfo: 'Informasi Jastiper',
-    category: 'Kategori Produk',
-    weight: '500g',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+  const { id } = useLocalSearchParams();
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const fetchProductDetails = async () => {
+    // Pastikan productId ada dan merupakan string
+    if (typeof id !== 'string') {
+      console.error('Invalid productId');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const docRef = doc(firestore, "Product", id);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const productData = docSnap.data();
+        const fileId = productData.foto.split('/d/')[1].split('/')[0];
+        const imageUrl = `https://drive.google.com/uc?export=view&id=${fileId}`;
+
+        // Set product dengan tipe Product
+        setProduct({
+          id: id,
+          nama: productData.nama,
+          asalNegara: productData.asalNegara,
+          harga: productData.harga,
+          deadline: productData.deadline,
+          shippingDate: productData.shippingDate,
+          toko: productData.toko,
+          kategori: productData.kategori,
+          berat: productData.berat,
+          deskripsi: productData.deskripsi,
+          foto: imageUrl,
+        });
+      } else {
+        console.error('No such document!');
+      }
+    } catch (error) {
+      console.error('Error fetching product details: ', error);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  useEffect(() => {
+    fetchProductDetails();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+
+  if (!product) {
+    return (
+      <View style={styles.container}>
+        <Text>Product not found</Text>
+        <Text>Product id : {id} </Text>
+        <Text>Product data : {product} </Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Image source={product.image} style={styles.image} resizeMode="cover" />
+        <Image source={{ uri: product.foto }} style={styles.image} resizeMode="cover" />
         <View style={styles.infoContainer}>
           <View style={styles.header}>
             <View>
-              <Text style={styles.price}>Rp{product.price}</Text>
-              <Text style={styles.name}>{product.name}</Text>
+              <Text style={styles.price}>Rp {product.harga.toLocaleString('id-ID')}</Text>
+              <Text style={styles.name}>{product.nama}</Text>
             </View>
             <Pressable>
               <FontAwesome size={30} style={{ marginBottom: -3 }} name='bookmark-o' color={COLORS.primary}/>
@@ -50,15 +121,15 @@ const ProductDetails = () => {
             </View>
           </View>
           <View style={styles.divider} />
-          <Text style={styles.jastiperInfo}>{product.jastiperInfo}</Text>
+          <Text style={styles.jastiperInfo}>{product.toko}</Text>
           <View style={styles.divider} />
           <View style={styles.details}>
             <Text style={styles.title}>Detail Produk</Text>
-            <Text style={styles.detailText}>Kategori: {product.category}</Text>
-            <Text style={styles.detailText}>Berat: {product.weight}</Text>
+            <Text style={styles.detailText}>Kategori: {product.kategori}</Text>
+            <Text style={styles.detailText}>Berat: {product.berat}</Text>
           </View>
           <Text style={styles.title}>Deskripsi Produk</Text>
-          <Text style={styles.description}>{product.description}</Text>
+          <Text style={styles.description}>{product.deskripsi}</Text>
         </View>
       </ScrollView>
       <View style={styles.footer}>

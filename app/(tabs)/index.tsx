@@ -7,7 +7,8 @@ import { SectionList, StyleSheet, TouchableOpacity } from "react-native";
 import { COLORS, SIZES } from "@/constants";
 import { FlatList, Image, ScrollView } from "react-native";
 import ProductCard from "@/components/ProductCard";
-import fetchProducts from 
+// import fetchProducts from "../../Firebase/fetchProducts"
+import { collection, firestore, getDocs } from "@/firebaseConfig";
 
 // // Data dummy untuk produk
 // // const products = Array.from({ length: 10 }, (_, index) => ({
@@ -15,73 +16,6 @@ import fetchProducts from
 // //   name: `Product ${index + 1}`,
 // // }));
 
-const dummyData = [
-  {
-    id: "1",
-    name: "TV Set",
-    price: "50.000",
-    deadline: "2024-06-15",
-    shippingDate: "2024-06-20",
-    image: require("../../assets/images/product-1.jpeg"),
-  },
-  {
-    id: "2",
-    name: "Gelas Motif Bunga",
-    price: "62.500",
-    deadline: "2024-06-16",
-    shippingDate: "2024-06-21",
-    image: require("../../assets/images/product-2.jpeg"),
-  },
-  {
-    id: "3",
-    name: "Proyektor Modern",
-    price: "350.000",
-    deadline: "2024-06-16",
-    shippingDate: "2024-06-21",
-    image: require("../../assets/images/product-3.jpeg"),
-  },
-  {
-    id: "4",
-    name: "Oven/Microwave Standard",
-    price: "735.000",
-    deadline: "2024-06-16",
-    shippingDate: "2024-06-21",
-    image: require("../../assets/images/product-4.jpeg"),
-  },
-  {
-    id: "5",
-    name: "Sisir Rambut",
-    price: "55.000",
-    deadline: "2024-06-16",
-    shippingDate: "2024-06-21",
-    image: require("../../assets/images/product-1.jpeg"),
-  },
-  {
-    id: "6",
-    name: "Sapu Serba Guna",
-    price: "33.333",
-    deadline: "2024-06-16",
-    shippingDate: "2024-06-21",
-    image: require("../../assets/images/product-2.jpeg"),
-  },
-  {
-    id: "7",
-    name: "Stiker Spongebob",
-    price: "27.000",
-    deadline: "2024-06-16",
-    shippingDate: "2024-06-21",
-    image: require("../../assets/images/product-3.jpeg"),
-  },
-  {
-    id: "8",
-    name: "Kompor Listrik",
-    price: "1.000.999",
-    deadline: "2024-06-16",
-    shippingDate: "2024-06-21",
-    image: require("../../assets/images/product-4.jpeg"),
-  },
-  // Tambahkan data dummy lainnya...
-];
 
 type Country = {
   id: string;
@@ -208,18 +142,41 @@ const Flag: React.FC<CountryProps> = ({ country }) => {
 //   foto: string;
 // };
 
+
 export default function HomePage() {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  // Function to fetch data from Firestore
+  const fetchProducts = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(firestore, 'Product'));
+      const productList = [];
+    
+      querySnapshot.forEach((doc) => {
+        const productData = doc.data();
+        // Extract image file ID from Google Drive link
+        const fileId = productData.foto.split('/d/')[1].split('/')[0];
+        const imageUrl = `https://drive.google.com/uc?export=view&id=${fileId}`;
+
+        productList.push({
+          ...productData,
+          id: doc.id,
+          imageUrl, // Add converted image URL to product data
+        });
+      });
+      setProducts(productList);
+    } catch (error) {
+      console.error('Error fetching documents: ', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Use effect to fetch data on component mount
   useEffect(() => {
-    const loadProducts = async () => {
-      const productsData = await fetchProducts();
-      setProducts(productsData);
-    };
-    loadProducts();
+    fetchProducts();
   }, []);
-
-  console.log(products);
 
   return (
     <ScrollView nestedScrollEnabled={true} showsVerticalScrollIndicator={false} style={styles.container}>
@@ -264,7 +221,7 @@ export default function HomePage() {
         </View>
         <View style={styles.productRow}>
           <FlatList
-            data={dummyData}
+            data={products}
             keyExtractor={(item) => item.id}
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -288,7 +245,7 @@ export default function HomePage() {
         </View>
         <View style={styles.productRow}>
           <FlatList
-            data={dummyData}
+            data={products}
             keyExtractor={(item) => item.id}
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -301,10 +258,10 @@ export default function HomePage() {
         <Text style={styles.title}>Produk lainnya</Text>
         <View style={styles.productRow}>
           <FlatList
-            data={dummyData}
+            data={products}
             keyExtractor={(item) => item.id}
             numColumns={2}
-            renderItem={({ item }) => <ProductCard key={item.id} style={styles.ProductCard} product={item} />} // Gunakan komponen ProductCard untuk setiap item dalam FlatList
+            renderItem={({ item }) => <ProductCard key={item.id} style={styles.productCard} product={item} />} // Gunakan komponen ProductCard untuk setiap item dalam FlatList
             // contentContainerStyle={styles.productList}
           />
         </View>
