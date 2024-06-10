@@ -6,18 +6,22 @@ import { Text, View } from '@/constants/Themed';
 
 export default function CheckoutScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Checkout Screen</Text>
-      {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/modal.tsx" /> */}
-
-      {/* Use a light status bar on iOS to account for the black space above the modal */}
-      <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
+    <View style={styles.backdrop}>
+      {/* title alamat dan tombol pilih alamat lain */}
+      <View></View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  backdrop: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    paddingBottom: 80,
+    rowGap: 20,
+    backgroundColor: "#F0F0F0",
+  },
   container: {
     flex: 1,
     alignItems: 'center',
@@ -28,8 +32,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   separator: {
-    marginVertical: 30,
+    backgroundColor: '#A9A9A9',
     height: 1,
-    width: '80%',
+    width: '100%',
   },
 });
