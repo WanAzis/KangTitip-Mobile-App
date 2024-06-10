@@ -93,12 +93,44 @@ function RootLayoutNav() {
             headerTitleAlign: 'center'
           }}
         />
-                <Stack.Screen 
+        <Stack.Screen 
           name="checkout"
           // component={NotifScreen}
           options={{ 
             presentation: 'modal', 
             headerTitle: 'Detail Pesanan',
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTintColor: COLORS.offwhite,
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+            headerTitleAlign: 'center'
+          }}
+        />
+        <Stack.Screen 
+          name="editProfile"
+          // component={NotifScreen}
+          options={{ 
+            presentation: 'modal', 
+            headerTitle: 'Profil Pengguna',
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTintColor: COLORS.offwhite,
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+            headerTitleAlign: 'center'
+          }}
+        />
+        <Stack.Screen 
+          name="payment"
+          // component={NotifScreen}
+          options={{ 
+            presentation: 'modal', 
+            headerTitle: 'Bayar',
             headerStyle: {
               backgroundColor: COLORS.primary,
             },
