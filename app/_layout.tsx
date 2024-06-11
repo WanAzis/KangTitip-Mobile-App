@@ -93,7 +93,7 @@ function RootLayoutNav() {
           // component={NotifScreen}
           options={{ 
             presentation: 'modal', 
-            headerTitle: 'Keranjang(4)',
+            headerTitle: 'Keranjang',
             headerBackground: () => (
               <LinearGradient
                 colors={['#366FB3', '#4A8FE1']}

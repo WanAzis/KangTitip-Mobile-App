@@ -184,7 +184,7 @@ const ProductCheckout: React.FC<ProductCheckoutProps> = ({ product }) =>{
       <View style={{flexDirection: 'row', alignSelf: 'stretch',justifyContent: 'space-between', alignItems: 'center', marginBottom: 10}}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between', columnGap: 10}}>
           {/* Image */}
-          <Image source={require('../assets/images/product-1.png')} style={{width: 100, height: 100}}/>
+          <Image source={{ uri: product.imageUrl }} style={{width: 100, height: 100}}/>
           {/* description */}
           <View style={{flexDirection: 'column', justifyContent: 'space-between', marginLeft: 5, maxWidth: 125}}>
             <Text>{product.nama}</Text>

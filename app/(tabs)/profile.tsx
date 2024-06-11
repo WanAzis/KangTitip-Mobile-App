@@ -22,7 +22,7 @@ export default function ProfileScreen() {
           {/* profile and name */}
           <View style={{flexDirection: 'row', alignItems: 'center', backgroundColor: 'transparent', columnGap: 10}}>
             <Image source={require('../../assets/images/profile.png')} style={{height: 50, width: 50}}/>
-            <Text style={{fontWeight: 'bold', fontSize: 21}}>Kartika Sari</Text>
+            <Text style={{fontWeight: 'bold', fontSize: 21}}>Guest Account</Text>
           </View>
           {/* pen icon button */}
           <TouchableOpacity onPress={() => router.push('/editProfile')}>
