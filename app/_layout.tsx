@@ -225,6 +225,7 @@ function RootLayoutNav() {
           options={{ 
             presentation: 'modal', 
             headerTitle: 'Authentication',
+            headerShown: false,
           }}
         />
       </Stack>
