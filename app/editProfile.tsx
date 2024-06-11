@@ -4,8 +4,11 @@ import { Platform, StyleSheet } from 'react-native';
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/constants/Themed';
 import { MonoText } from '@/components/StyledText';
+import { auth } from '@/firebaseConfig';
 
 export default function editProfile() {
+  const user = auth.currentUser;
+  
   return (
     <View style={styles.backdrop}>
       <MonoText style={styles.title}>Edit Profile</MonoText>

@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Image } from 'react-native'
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Link, Tabs } from "expo-router";
+import { Link, router, Tabs } from "expo-router";
 import { Pressable, TextInput, View } from "react-native";
 import Colors from "@/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
 import { COLORS } from "@/constants";
+import { getAuth } from "firebase/auth";
+import { auth } from "@/firebaseConfig";
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -20,6 +22,21 @@ function TabBarIcon(props: {
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
+  const [isLoading, setIsLoading] = useState(true);
+
+  auth.onAuthStateChanged((user) => {
+    setIsLoading(false);
+    if (!user) {
+      router.replace("/authScreen");
+    }
+  });
+
+  // if (isLoading) return (
+  //     <View>
+  //       <Text>Loading...</Text>
+  //     </View>
+  // );
+  
   return (
     <Tabs
       screenOptions={{

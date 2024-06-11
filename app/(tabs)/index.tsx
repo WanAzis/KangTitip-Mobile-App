@@ -8,7 +8,7 @@ import { COLORS, SIZES } from "@/constants";
 import { FlatList, Image, ScrollView } from "react-native";
 import ProductCard from "@/components/ProductCard";
 // import fetchProducts from "../../Firebase/fetchProducts"
-import { collection, firestore, getDocs } from "@/firebaseConfig";
+import { collection, firestore, getAuth, getDocs } from "@/firebaseConfig";
 
 // // Data dummy untuk produk
 // // const products = Array.from({ length: 10 }, (_, index) => ({
@@ -128,24 +128,12 @@ const Flag: React.FC<CountryProps> = ({ country }) => {
   );
 };
 
-// type Product = {
-//   id: string;
-//   nama: string;
-//   asalNegara: string;
-//   harga: number;
-//   deadline: string;
-//   shippingDate: string;
-//   toko: string;
-//   kategori: string;
-//   berat: string;
-//   deskripsi: string;
-//   foto: string;
-// };
-
 
 export default function HomePage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const { currentUser } = getAuth();
 
   // Function to fetch data from Firestore
   const fetchProducts = async () => {
