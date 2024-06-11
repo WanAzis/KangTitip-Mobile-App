@@ -3,81 +3,54 @@ import ProductCard from '@/components/ProductCard';
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/constants/Themed';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
+import { useEffect, useState } from 'react';
+import { auth, collection, firestore, getDocs } from '@/firebaseConfig';
 
-// // Data dummy untuk produk
-// // const products = Array.from({ length: 10 }, (_, index) => ({
-// //   id: index.toString(),
-// //   name: `Product ${index + 1}`,
-// // }));
-
-const dummyData = [
-  {
-    id: "1",
-    name: "TV Set",
-    price: "50.000",
-    deadline: "2024-06-15",
-    shippingDate: "2024-06-20",
-    image: require("../../assets/images/product-1.jpeg"),
-  },
-  {
-    id: "2",
-    name: "Gelas Motif Bunga",
-    price: "62.500",
-    deadline: "2024-06-16",
-    shippingDate: "2024-06-21",
-    image: require("../../assets/images/product-2.jpeg"),
-  },
-  {
-    id: "3",
-    name: "Proyektor Modern",
-    price: "350.000",
-    deadline: "2024-06-16",
-    shippingDate: "2024-06-21",
-    image: require("../../assets/images/product-3.jpeg"),
-  },
-  {
-    id: "4",
-    name: "Oven/Microwave Standard",
-    price: "735.000",
-    deadline: "2024-06-16",
-    shippingDate: "2024-06-21",
-    image: require("../../assets/images/product-4.jpeg"),
-  },
-  {
-    id: "5",
-    name: "Sisir Rambut",
-    price: "55.000",
-    deadline: "2024-06-16",
-    shippingDate: "2024-06-21",
-    image: require("../../assets/images/product-1.jpeg"),
-  },
-  {
-    id: "6",
-    name: "Sapu Serba Guna",
-    price: "33.333",
-    deadline: "2024-06-16",
-    shippingDate: "2024-06-21",
-    image: require("../../assets/images/product-2.jpeg"),
-  },
-  {
-    id: "7",
-    name: "Stiker Spongebob",
-    price: "27.000",
-    deadline: "2024-06-16",
-    shippingDate: "2024-06-21",
-    image: require("../../assets/images/product-3.jpeg"),
-  },
-  {
-    id: "8",
-    name: "Kompor Listrik",
-    price: "1.000.999",
-    deadline: "2024-06-16",
-    shippingDate: "2024-06-21",
-    image: require("../../assets/images/product-4.jpeg"),
-  },
-];
 
 export default function SavedScreen() {
+  const [savedProducts, setSavedProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchSavedProducts = async () => {
+      const user = auth.currentUser;
+
+      if (user) {
+        const userId = user.uid;
+        const savedProductsRef = collection(firestore, userId, 'productSaved', 'products');
+        try {
+          const savedProductsSnapshot = await getDocs(savedProductsRef);
+          // const productList = [];
+
+          const productsList = savedProductsSnapshot.docs.map(doc => ({
+            id: doc.id,
+            imageUrl: doc.data().foto,
+            ...doc.data()
+          }));
+          // savedProductsSnapshot.forEach((doc) => {
+          //   const productData = doc.data();
+          //   // Extract image file ID from Google Drive link
+          //   const fileId = productData.foto.split('/d/')[1].split('/')[0];
+          //   const imageUrl = `https://drive.google.com/uc?export=view&id=${fileId}`;
+    
+          //   productList.push({
+          //     ...productData,
+          //     id: doc.id,
+          //     imageUrl, // Add converted image URL to product data
+          //   });
+          // });
+
+          setSavedProducts(productsList);
+          setLoading(false);
+        } catch (error) {
+          console.error("Error fetching saved products: ", error);
+        }
+      }
+    };
+
+    fetchSavedProducts();
+  }, []);
+  
   return (
     <View style={styles.backdrop}>
       {/* Ttile + filter and sort */}
@@ -118,7 +91,7 @@ export default function SavedScreen() {
         </View>
       </View>
       <FlatList
-        data={dummyData}
+        data={savedProducts}
         keyExtractor={(item) => item.id}
         numColumns={2}
         renderItem={({ item }) => <ProductCard style={{marginHorizontal: 5}} product={item} />}

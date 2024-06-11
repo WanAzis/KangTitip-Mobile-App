@@ -71,7 +71,7 @@ function RootLayoutNav() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         {/* <Stack.Screen name="authScreen" options={{ headerShown: false }} /> */}
         <Stack.Screen 
-          name="productDetails"
+          name="productDetails/[id]"
           // component={NotifScreen}
           options={{ 
             presentation: 'modal', 

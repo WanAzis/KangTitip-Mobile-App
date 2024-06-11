@@ -1,14 +1,51 @@
 import { StatusBar } from 'expo-status-bar';
-import { Platform, ScrollView, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { Platform, ScrollView, StyleSheet, Image, TouchableOpacity, FlatList } from 'react-native';
 
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/constants/Themed';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { router } from 'expo-router';
+import { auth, collection, firestore, getDocs } from '@/firebaseConfig';
 
 export default function CheckoutScreen() {
   const products = [1, 2, 3, 4, 5];
+  const [checkoutProducts, setcheckoutProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchcheckoutProducts = async () => {
+      const user = auth.currentUser;
+
+      if (user) {
+        const userId = user.uid;
+        const checkoutProductsRef = collection(firestore, userId, 'cart', 'products');
+        try {
+          const checkoutProductsSnapshot = await getDocs(checkoutProductsRef);
+          // const productList = [];
+
+          const productsList = checkoutProductsSnapshot.docs.map(doc => ({
+            id: doc.id,
+            imageUrl: doc.data().foto,
+            ...doc.data()
+          }));
+
+          setcheckoutProducts(productsList);
+          setLoading(false);
+        } catch (error) {
+          console.error("Error fetching saved products: ", error);
+        }
+      }
+    };
+
+    fetchcheckoutProducts();
+  }, []);
+
+  const renderCheckoutItem = ({ item }) => (
+    <ProductCheckout
+      product={item}
+    />
+  );
 
   return (
     <View style={styles.backdrop}>
@@ -49,34 +86,34 @@ export default function CheckoutScreen() {
         <View 
             style={{backgroundColor: 'transparent'}}
           >
-          {products.map((product, index) => (
+            <FlatList
+            data={checkoutProducts}
+            renderItem={renderCheckoutItem}
+            keyExtractor={item => item.id}
+          />
+          {/* {products.map((product, index) => (
             <ProductCheckout key={index} />
-          ))}
+          ))} */}
           {/* Rincian Pembayaran */}
           <Text style={{fontWeight: 'bold', fontSize: 18, marginLeft: 20, marginBottom: 20}}>Rincian Pembayaran</Text> 
           {/* Detailss + metode pembayaran */}
           <View style={{padding: 20, rowGap: 5, marginBottom: 100}}>
             {/* total harga */}
             <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', columnGap: 5}}>
-              <Text style={{fontSize: 12}}>Total Harga (8 barang)</Text>
-              <Text style={{fontSize: 12}}>Rp560.000</Text>
+              <Text style={{fontSize: 12}}>Total Harga (3 barang)</Text>
+              <Text style={{fontSize: 12}}>Rp54.000.000</Text>
             </View>
             {/* total ongkir */}
             <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', columnGap: 5}}>
-              <Text style={{fontSize: 12}}>Total Harga (8 barang)</Text>
-              <Text style={{fontSize: 12}}>Rp560.000</Text>
-            </View>
-            {/* biaya layanan */}
-            <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', columnGap: 5}}>
-              <Text style={{fontSize: 12}}>Total Harga (8 barang)</Text>
-              <Text style={{fontSize: 12}}>Rp560.000</Text>
+              <Text style={{fontSize: 12}}>Total Harga (3 barang)</Text>
+              <Text style={{fontSize: 12}}>Rp25.500.000</Text>
             </View>
             {/* separator */}
             <View style={[styles.separator, {backgroundColor: 'black', marginVertical: 10}]} />
             {/* total belanja */}
             <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', columnGap: 5}}>
               <Text style={{fontSize: 14}}>Total Belanja</Text>
-              <Text style={{fontSize: 14, fontWeight: 'bold'}}>Rp560.000</Text>
+              <Text style={{fontSize: 14, fontWeight: 'bold'}}>Rp79.500.000</Text>
             </View>
           </View>
         </View>
@@ -99,7 +136,7 @@ export default function CheckoutScreen() {
           {/* Total bre */}
           <View style={{flexDirection: 'column', justifyContent: 'space-between', alignItems: 'flex-start'}}>
             <Text style={{textAlign: 'left', fontSize: 14}}>Total</Text>
-            <Text style={{fontWeight: 'bold', textAlign: 'left', fontSize: 16}}>Rp560.000</Text>
+            <Text style={{fontWeight: 'bold', textAlign: 'left', fontSize: 16}}>Rp79.500.000</Text>
           </View>
           {/* Button */}
           <TouchableOpacity
@@ -118,16 +155,20 @@ export default function CheckoutScreen() {
   );
 }
 
-const ProductCheckout = () => {
+interface ProductCheckoutProps {
+  product: any;
+}
+
+const ProductCheckout: React.FC<ProductCheckoutProps> = ({ product }) =>{
   return (
     <View style={[styles.container, {marginBottom: 20, padding: 20, rowGap: 10}]}>
       {/* title and location */}
       <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', alignSelf: 'stretch'}}>
-        <Text style={{fontWeight: 'bold', fontSize: 14}}>Super Jastip</Text>
+        <Text style={{fontWeight: 'bold', fontSize: 14}}>{product.toko}</Text>
         {/* location */}
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Ionicons name="location-outline" size={20} color="#1556A4" />
-          <Text style={{fontWeight: 'regular', fontSize: 12, color: '#0047A0'}}>Korea Selatan</Text>
+          <Text style={{fontWeight: 'regular', fontSize: 12, color: '#0047A0'}}>{product.asalNegara}</Text>
         </View>
       </View>
       {/* separator */}
@@ -135,7 +176,7 @@ const ProductCheckout = () => {
       {/* Dikirim dari + waktu */}
       <View style={{flexDirection: 'row', alignSelf: 'stretch', alignItems: 'center', justifyContent: 'space-between'}}>
         <Text style={{fontWeight: 'regular', fontSize: 12}}>Dikirim dari <Text style={{fontWeight: 'bold', fontSize: 12}}>Bekasi</Text></Text>
-        <Text style={{fontWeight: 'regular', fontSize: 12}}>12/05/2024 20:00 WIB</Text>
+        <Text style={{fontWeight: 'regular', fontSize: 12}}>12/06/2024 20:00 WIB</Text>
       </View>
       {/* separator */}
       <View style={styles.separator} />
@@ -146,8 +187,8 @@ const ProductCheckout = () => {
           <Image source={require('../assets/images/product-1.png')} style={{width: 100, height: 100}}/>
           {/* description */}
           <View style={{flexDirection: 'column', justifyContent: 'space-between', marginLeft: 5, maxWidth: 125}}>
-            <Text>BIODANCE Bio-Collagen Real Deep Mask</Text>
-            <Text>Rp. 70.000</Text>
+            <Text>{product.nama}</Text>
+            <Text>Rp {product.harga.toLocaleString('id-ID')}</Text>
           </View>
         </View>
         {/* quantity */}
@@ -158,14 +199,14 @@ const ProductCheckout = () => {
       {/* Total */}
       <View style={{flexDirection: 'row', alignSelf: 'stretch', alignItems: 'center', justifyContent: 'space-between'}}>
         <Text style={{fontWeight: 'regular', fontSize: 14}}>Total Pesanan (3 Produk)</Text>
-        <Text style={{fontWeight: 'bold', fontSize: 14}}>Rp280.000</Text>
+        <Text style={{fontWeight: 'bold', fontSize: 14}}>Rp {(product.harga * 3).toLocaleString('id-ID')}</Text>
       </View>
       {/* Pengiriman */}
       <View style={{borderColor: '#A9A9A9', borderRadius:10, borderWidth: 1, padding: 10, flexDirection: 'row', alignSelf: 'stretch', alignItems: 'center', justifyContent: 'space-between'}}>
         {/* nama kurir + estimasi tiba */}
         <View>
-          <Text style={{fontWeight: 'bold', fontSize: 14}}>Nama Kurir</Text>
-          <Text style={{fontWeight: 'regular', fontSize: 12}}>Estimasi tiba: 27/04 - 02/05</Text>
+          <Text style={{fontWeight: 'bold', fontSize: 14}}>JNE</Text>
+          <Text style={{fontWeight: 'regular', fontSize: 12}}>Estimasi tiba: 12/06 - 15/06</Text>
         </View>
         {/* harga pengiriman */}
         <Text>Rp10.0000</Text>

@@ -3,8 +3,9 @@ import { COLORS, SIZES } from '@/constants';
 import { FontAwesome } from '@expo/vector-icons';
 import React, { useEffect, useState } from 'react';
 import { useLocalSearchParams, useSegments } from 'expo-router';
-import { View, Text, Image, StyleSheet, Pressable, ScrollView } from 'react-native';
-import { doc, firestore, getDoc } from '@/firebaseConfig';
+import { View, Text, Image, StyleSheet, Pressable, ScrollView, Alert } from 'react-native';
+import { addDoc, auth, collection, doc, firestore, getDoc, deleteDoc } from '@/firebaseConfig';
+import { setDoc } from '@firebase/firestore';
 
 // Definisikan tipe untuk produk
 interface Product {
@@ -25,6 +26,103 @@ const ProductDetails = () => {
   const { id } = useLocalSearchParams();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const [isSaved, setIsSaved] = useState(false);
+
+  useEffect(() => {
+    checkIfProductIsSaved();
+  }, []);
+
+  const checkIfProductIsSaved = async () => {
+    const user = auth.currentUser;
+
+    if (user) {
+      const userId = user.uid;
+      try {
+        const productDocRef = doc(firestore, userId, 'productSaved', 'products', product.id);
+        const productDoc = await getDoc(productDocRef);
+
+        if (productDoc.exists()) {
+          setIsSaved(true);
+        } else {
+          setIsSaved(false);
+        }
+      } catch (error) {
+        console.error("Error checking product status: ", error);
+      }
+    }
+  };
+
+
+  const handleSaveProduct = async () => {
+    const user = auth.currentUser;
+
+    if (user) {
+      const userId = user.uid;
+      const productDocRef = doc(firestore, userId, 'productSaved', 'products', product.id);
+      try {
+        if (isSaved) {
+          // Hapus produk jika sudah disimpan
+          await deleteDoc(productDocRef);
+          setIsSaved(false);
+          Alert.alert('Berhasil menghapus produk');
+        } else {
+          // Simpan produk jika belum disimpan
+          await setDoc(productDocRef, {
+            // productId: product.id,
+            nama: product?.nama,
+            asalNegara: product?.asalNegara,
+            harga: product?.harga,
+            deadline: product?.deadline,
+            shippingDate: product?.shippingDate,
+            toko: product?.toko,
+            kategori: product?.kategori,
+            berat: product?.berat,
+            deskripsi: product?.deskripsi,
+            foto: product?.foto,
+          });
+          setIsSaved(true);
+          Alert.alert('Produk berhasil disimpan');
+        }
+      } catch (error) {
+        console.error("Error saving or deleting product: ", error);
+        Alert.alert('Terjadi kesalahan saat menyimpan produk');
+      }
+    } else {
+      Alert.alert('Anda harus login untuk menyimpan produk');
+    }
+  };
+  const handleAddtoCart = async () => {
+    const user = auth.currentUser;
+
+    if (user) {
+      const userId = user.uid;
+      const productDocRef = doc(firestore, userId, 'cart', 'products', product.id);
+      try {
+        await setDoc(productDocRef, {
+            // productId: product.id,
+            nama: product?.nama,
+            asalNegara: product?.asalNegara,
+            harga: product?.harga,
+            deadline: product?.deadline,
+            shippingDate: product?.shippingDate,
+            toko: product?.toko,
+            kategori: product?.kategori,
+            berat: product?.berat,
+            deskripsi: product?.deskripsi,
+            foto: product?.foto,
+            amount: 1,
+            selected: false,
+          });
+          Alert.alert('Produk berhasil dimasukkan ke keranjang');
+      } catch (error) {
+        console.error("Error saving or deleting product: ", error);
+        Alert.alert('Terjadi kesalahan saat memasukkan ke keranjang');
+      }
+    } else {
+      Alert.alert('Anda harus login untuk memasukkan produk ke keranjang');
+    }
+  };
 
   const fetchProductDetails = async () => {
     // Pastikan productId ada dan merupakan string
@@ -99,8 +197,8 @@ const ProductDetails = () => {
               <Text style={styles.price}>Rp {product.harga.toLocaleString('id-ID')}</Text>
               <Text style={styles.name}>{product.nama}</Text>
             </View>
-            <Pressable>
-              <FontAwesome size={30} style={{ marginBottom: -3 }} name='bookmark-o' color={COLORS.primary}/>
+            <Pressable onPress={handleSaveProduct}>
+              <FontAwesome size={30} style={{ marginBottom: -3 }} name={isSaved ? 'bookmark' : 'bookmark-o'} color={COLORS.primary}/>
             </Pressable>
           </View>
           <View style={styles.divider} />
@@ -133,7 +231,7 @@ const ProductDetails = () => {
         </View>
       </ScrollView>
       <View style={styles.footer}>
-        <Pressable style={[styles.button, styles.cartButton]}>
+        <Pressable style={[styles.button, styles.cartButton]} onPress={handleAddtoCart}>
           <Text style={[styles.buttonText, { color: COLORS.primary }]}>Add Keranjang</Text>
         </Pressable>
         <Pressable style={[styles.button, styles.titipButton]}>
@@ -253,3 +351,7 @@ const styles = StyleSheet.create({
 });
 
 export default ProductDetails;
+function firebase(firebase: any, arg1: string, arg2: string, id: string): import("@firebase/firestore").CollectionReference<import("@firebase/firestore").DocumentData | null, import("@firebase/firestore").DocumentData> {
+  throw new Error('Function not implemented.');
+}
+

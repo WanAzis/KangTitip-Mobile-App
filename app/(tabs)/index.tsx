@@ -9,6 +9,7 @@ import { FlatList, Image, ScrollView } from "react-native";
 import ProductCard from "@/components/ProductCard";
 // import fetchProducts from "../../Firebase/fetchProducts"
 import { collection, firestore, getAuth, getDocs } from "@/firebaseConfig";
+import Flag from "@/components/flag";
 
 // // Data dummy untuk produk
 // // const products = Array.from({ length: 10 }, (_, index) => ({
@@ -17,15 +18,17 @@ import { collection, firestore, getAuth, getDocs } from "@/firebaseConfig";
 // // }));
 
 
-type Country = {
-  id: string;
-  name: string;
-  flag: string;
-};
+// type Country = {
+//   id: string;
+//   name: string;
+//   flag: string;
+// };
 
-type CountryProps = {
-  country: Country;
-};
+// type CountryProps = {
+//   country: Country;
+//   isActive: boolean;
+//   onSelectCountry: (countryName: string) => void;
+// };
 
 const countryData = [
   {
@@ -34,19 +37,39 @@ const countryData = [
     flag: "https://img.icons8.com/?size=100&id=lph_obIfg-jT&format=png&color=000000",
   },
   {
-    id: "2",
-    name: "Malaysia",
-    flag: "https://img.icons8.com/?size=100&id=nQtyhesxmxhM&format=png&color=000000",
-  },
-  {
     id: "3",
     name: "Singapore",
     flag: "https://img.icons8.com/?size=100&id=8H-8FMObN4vB&format=png&color=000000",
   },
   {
+    id: "11",
+    name: "Amerika Serikat",
+    flag: "https://img.icons8.com/?size=100&id=aRiu1GGi6Aoe&format=png&color=000000",
+  },
+  {
     id: "4",
     name: "Thailand",
     flag: "https://img.icons8.com/?size=100&id=IWVDTvmUNsig&format=png&color=000000",
+  },
+  {
+    id: "8",
+    name: "Jerman",
+    flag: "https://img.icons8.com/?size=100&id=hTMPE6ntTofO&format=png&color=000000",
+  },
+  {
+    id: "9",
+    name: "Jepang",
+    flag: "https://img.icons8.com/?size=100&id=McQbrq9qaQye&format=png&color=000000",
+  },
+  {
+    id: "10",
+    name: "Korea Selatan",
+    flag: "https://img.icons8.com/?size=100&id=-_RS8ho736Fs&format=png&color=000000",
+  },
+  {
+    id: "7",
+    name: "Myanmar",
+    flag: "https://img.icons8.com/?size=100&id=mdqlbmCXtG0X&format=png&color=000000",
   },
   {
     id: "5",
@@ -58,80 +81,61 @@ const countryData = [
     name: "Philippines",
     flag: "https://img.icons8.com/?size=100&id=15530&format=png&color=000000",
   },
-  {
-    id: "7",
-    name: "Myanmar",
-    flag: "https://img.icons8.com/?size=100&id=15530&format=png&color=000000",
-  },
-  {
-    id: "8",
-    name: "Brunei",
-    flag: "https://img.icons8.com/?size=100&id=60221&format=png&color=000000",
-  },
-  {
-    id: "9",
-    name: "Cambodia",
-    flag: "https://img.icons8.com/?size=100&id=j8AsAniVuzYv&format=png&color=000000",
-  },
-  {
-    id: "10",
-    name: "Laos",
-    flag: "https://img.icons8.com/?size=100&id=2ui1n4CYeion&format=png&color=000000",
-  },
 ];
 
-// Flag component
-const Flag: React.FC<CountryProps> = ({ country }) => {
-  const [activeFlag, setActiveFlag] = useState<string | null>(null);
-
-  const handleFlagPicker = (name: string | null) => {
-    setActiveFlag((prev) => (prev === name ? null : name));
-  };
+// // Flag component
+// const Flag: React.FC<CountryProps> = ({ country, isActive, onSelectCountry }) => {
+  //   const [activeFlag, setActiveFlag] = useState<string | null>(null);
   
-  const activeStyle = { backgroundColor: "#3A76BD", color: "white" };
-  const activeTextStyle = { color: "white" };
+  //   const handleFlagPicker = () => {
+    //     onSelectCountry(country.name);
+    //   };
+  
+//   const activeStyle = { backgroundColor: "#3A76BD", color: "white" };
+//   const activeTextStyle = { color: "white" };
 
-  return (
-    <TouchableOpacity
-      style={[
-        {
-          flexDirection: "row",
-          alignItems: "center",
-          columnGap: 5,
-          marginLeft: 5,
-          padding: 5,
-          paddingBottom: 5,
-          borderRadius: 25,
-          minHeight: 25,
-          backgroundColor: "#D9D9D9",
-        },
-        activeFlag === country.name ? activeStyle : {},
-      ]}
-      onPress={() => handleFlagPicker(country.name)}
-      >
-      <Image
-        source={{ uri: country.flag }}
-        style={{ width: 20, height: 20, borderWidth: 2, borderRadius: 10 }}
-      />
-      <Text
-        style={[{
-          fontSize: 11,
-          textAlign: "center",
-          textAlignVertical: "center",
-        },
-        activeFlag === country.name ? activeTextStyle : {},
-        ]}
-      >
-        {country.name}
-      </Text>
-    </TouchableOpacity>
-  );
-};
+//   return (
+//     <TouchableOpacity
+//       style={[
+//         {
+//           flexDirection: "row",
+//           alignItems: "center",
+//           columnGap: 5,
+//           marginLeft: 5,
+//           padding: 5,
+//           paddingBottom: 5,
+//           borderRadius: 25,
+//           minHeight: 25,
+//           backgroundColor: "#D9D9D9",
+//         },
+//         activeFlag === country.name ? activeStyle : {},
+//       ]}
+//       onPress={() => handleFlagPicker(country.name)}
+//       >
+//       <Image
+//         source={{ uri: country.flag }}
+//         style={{ width: 20, height: 20, borderWidth: 2, borderRadius: 10 }}
+//       />
+//       <Text
+//         style={[{
+//           fontSize: 11,
+//           textAlign: "center",
+//           textAlignVertical: "center",
+//         },
+//         activeFlag === country.name ? activeTextStyle : {},
+//         ]}
+//       >
+//         {country.name}
+//       </Text>
+//     </TouchableOpacity>
+//   );
+// };
 
 
 export default function HomePage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedCountries, setSelectedCountries] = useState([]);
 
   const { currentUser } = getAuth();
 
@@ -165,6 +169,20 @@ export default function HomePage() {
   useEffect(() => {
     fetchProducts();
   }, []);
+
+  const toggleCountrySelection = (countryName: string) => {
+    setSelectedCountries((prevSelected) => {
+      if (prevSelected.includes(countryName)) {
+        return prevSelected.filter((name) => name !== countryName);
+      } else {
+        return [...prevSelected, countryName];
+      }
+    });
+  };
+
+  const filteredProducts = products.filter((product) =>
+    selectedCountries.length === 0 ? true : selectedCountries.includes(product.asalNegara)
+  );
 
   return (
     <ScrollView nestedScrollEnabled={true} showsVerticalScrollIndicator={false} style={styles.container}>
@@ -201,7 +219,12 @@ export default function HomePage() {
         <View style={{ backgroundColor: 'transparent' }}>
           <FlatList
             data={countryData}
-            renderItem={({ item }) => <Flag country={item} />}
+            renderItem={({ item }) => 
+            <Flag
+              country={item}
+              isActive={selectedCountries.includes(item.name)}
+              onSelectCountry={toggleCountrySelection}
+            />}
             keyExtractor={(item) => item.id}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
@@ -209,7 +232,7 @@ export default function HomePage() {
         </View>
         <View style={styles.productRow}>
           <FlatList
-            data={products}
+            data={filteredProducts}
             keyExtractor={(item) => item.id}
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -218,14 +241,19 @@ export default function HomePage() {
           />
         </View>
       </View>
-      <View style={[styles.container1, { marginTop: -5 }]}>
+      {/* <View style={[styles.container1, { marginTop: -5 }]}>
         <View style={styles.titleRow}>
           <Text style={styles.title}>Keliling Indonesia</Text>
         </View>
         <View style={{ backgroundColor: 'transparent' }}>
           <FlatList
             data={countryData}
-            renderItem={({ item }) => <Flag country={item} />}
+            renderItem={({ item }) => 
+            <Flag
+              country={item}
+              isActive={selectedCountries.includes(item.name)}
+              onSelectCountry={toggleCountrySelection}
+            />}
             keyExtractor={(item) => item.id}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
@@ -241,7 +269,7 @@ export default function HomePage() {
             // contentContainerStyle={styles.productList}
           />
         </View>
-      </View>
+      </View> */}
       <View style={styles.container2}>
         <Text style={styles.title}>Produk lainnya</Text>
         <View style={styles.productRow}>
