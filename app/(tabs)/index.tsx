@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text } from "@/constants/Themed";
 import Swiper from 'react-native-swiper';
-// import { SliderBox } from 'react-native-image-slider-box'
-// import styles from './index.style';
 import { SectionList, StyleSheet, TouchableOpacity } from "react-native";
 import { COLORS, SIZES } from "@/constants";
 import { FlatList, Image, ScrollView } from "react-native";
@@ -168,39 +166,9 @@ export default function HomePage() {
             horizontal
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => <ProductCard key={item.id} style={styles.smallProductCard} product={item} />} // Gunakan komponen ProductCard untuk setiap item dalam FlatList
-            // contentContainerStyle={styles.productList}
           />
         </View>
       </View>
-      {/* <View style={[styles.container1, { marginTop: -5 }]}>
-        <View style={styles.titleRow}>
-          <Text style={styles.title}>Keliling Indonesia</Text>
-        </View>
-        <View style={{ backgroundColor: 'transparent' }}>
-          <FlatList
-            data={countryData}
-            renderItem={({ item }) => 
-            <Flag
-              country={item}
-              isActive={selectedCountries.includes(item.name)}
-              onSelectCountry={toggleCountrySelection}
-            />}
-            keyExtractor={(item) => item.id}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-          />
-        </View>
-        <View style={styles.productRow}>
-          <FlatList
-            data={products}
-            keyExtractor={(item) => item.id}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            renderItem={({ item }) => <ProductCard key={item.id} style={styles.smallProductCard} product={item} />} // Gunakan komponen ProductCard untuk setiap item dalam FlatList
-            // contentContainerStyle={styles.productList}
-          />
-        </View>
-      </View> */}
       <View style={styles.container2}>
         <Text style={styles.title}>Produk lainnya</Text>
         <View style={styles.productRow}>
@@ -209,15 +177,12 @@ export default function HomePage() {
             keyExtractor={(item) => item.id}
             numColumns={2}
             renderItem={({ item }) => <ProductCard key={item.id} style={styles.productCard} product={item} />} // Gunakan komponen ProductCard untuk setiap item dalam FlatList
-            // contentContainerStyle={styles.productList}
           />
         </View>
       </View>
     </ScrollView>
   );
 }
-
-// export default HomePage;
 
 const styles = StyleSheet.create({
   productCard: {

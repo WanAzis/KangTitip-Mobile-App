@@ -102,8 +102,6 @@ export default function CartScreen() {
       const newAmount = amount + 1;
       setAmount(prevAmount => prevAmount + 1);
       onAmountChange(product.id, amount + 1);
-
-      updateProductAmountInDatabase(product.id, newAmount);
     };
     
     const decreaseAmount = () => {
@@ -111,31 +109,6 @@ export default function CartScreen() {
         const newAmount = amount + 1;
         setAmount(prevAmount => prevAmount - 1);
         onAmountChange(product.id, amount - 1);
-
-        updateProductAmountInDatabase(product.id, newAmount);
-      }
-    };
-
-    const updateProductAmountInDatabase = async (productId, newAmount) => {
-      const user = auth.currentUser;
-  
-      if (user) {
-        const userId = user.uid;
-        const productDocRef = doc(firestore, userId, 'productSaved', 'products', productId);
-        try {
-          // Simpan produk jika belum disimpan
-          await setDoc(productDocRef, {
-            // productId: product.id,
-            amount: newAmount
-          });
-          // setIsSaved(true);
-          // Alert.alert('Produk berhasil disimpan');
-        } catch (error) {
-          console.error("Error saving or deleting product: ", error);
-          // Alert.alert('Terjadi kesalahan saat menyimpan produk');
-        }
-      } else {
-        // Alert.alert('Anda harus login untuk menyimpan produk');
       }
     };
     
