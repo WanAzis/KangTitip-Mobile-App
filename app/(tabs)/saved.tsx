@@ -36,7 +36,7 @@ export default function SavedScreen() {
     };
 
     fetchSavedProducts();
-  }, []);
+  }, [savedProducts]);
   
   return (
     <View style={styles.backdrop}>
@@ -49,7 +49,7 @@ export default function SavedScreen() {
           backgroundColor: "transparent",
         }}>
         <Text style={{ color: "#004859", fontWeight: "bold", fontSize: 14 }}>
-          
+        {savedProducts.length} Products 
         </Text>
         <View
           style={{
