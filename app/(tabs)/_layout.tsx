@@ -8,6 +8,7 @@ import Colors from "@/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
 import { useClientOnlyValue } from "@/components/useClientOnlyValue";
 import { COLORS } from "@/constants";
+import { LinearGradient } from "expo-linear-gradient";
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -32,6 +33,15 @@ export default function TabLayout() {
         headerStyle: {
           backgroundColor: COLORS.primary,
         },
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+        headerBackground: () => (
+          <LinearGradient
+            colors={['#366FB3', '#4A8FE1']}
+            style={{ flex: 1 }}
+          />
+        ),
       }}>
       <Tabs.Screen
         name="index"

@@ -6,18 +6,21 @@ import { Text, View } from '@/constants/Themed';
 
 export default function NotifScreen() {
   return (
-    <View style={styles.container}>
+    <View style={styles.backdrop}>
       <Text style={styles.title}>Notification screen</Text>
-      {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
-      {/* <EditScreenInfo path="app/modal.tsx" /> */}
-
-      {/* Use a light status bar on iOS to account for the black space above the modal */}
-      <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  backdrop: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: 'center',
+    rowGap: 20,
+    backgroundColor: "#F0F0F0",
+  },
   container: {
     flex: 1,
     alignItems: 'center',

@@ -8,6 +8,7 @@ import 'react-native-reanimated';
 import { COLORS, SIZES } from '@/constants';
 
 import { useColorScheme } from '@/components/useColorScheme';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -68,9 +69,12 @@ function RootLayoutNav() {
           options={{ 
             presentation: 'modal', 
             headerTitle: 'Product Details',
-            headerStyle: {
-              backgroundColor: COLORS.primary,
-            },
+            headerBackground: () => (
+              <LinearGradient
+                colors={['#366FB3', '#4A8FE1']}
+                style={{ flex: 1 }}
+              />
+            ),
             headerTintColor: COLORS.offwhite,
             headerTitleStyle: {
               fontWeight: 'bold',
@@ -83,14 +87,17 @@ function RootLayoutNav() {
           options={{ 
             presentation: 'modal', 
             headerTitle: 'Keranjang(4)',
-            headerStyle: {
-              backgroundColor: COLORS.primary,
-            },
+            headerBackground: () => (
+              <LinearGradient
+                colors={['#366FB3', '#4A8FE1']}
+                style={{ flex: 1 }}
+              />
+            ),
             headerTintColor: COLORS.offwhite,
             headerTitleStyle: {
               fontWeight: 'bold',
             },
-            headerTitleAlign: 'center'
+            headerTitleAlign: 'center',
           }}
         />
         <Stack.Screen 
@@ -99,9 +106,12 @@ function RootLayoutNav() {
           options={{ 
             presentation: 'modal', 
             headerTitle: 'Detail Pesanan',
-            headerStyle: {
-              backgroundColor: COLORS.primary,
-            },
+            headerBackground: () => (
+              <LinearGradient
+                colors={['#366FB3', '#4A8FE1']}
+                style={{ flex: 1 }}
+              />
+            ),
             headerTintColor: COLORS.offwhite,
             headerTitleStyle: {
               fontWeight: 'bold',
@@ -115,14 +125,17 @@ function RootLayoutNav() {
           options={{ 
             presentation: 'modal', 
             headerTitle: 'Profil Pengguna',
-            headerStyle: {
-              backgroundColor: COLORS.primary,
-            },
+            headerBackground: () => (
+              <LinearGradient
+                colors={['#366FB3', '#4A8FE1']}
+                style={{ flex: 1 }}
+              />
+            ),
             headerTintColor: COLORS.offwhite,
             headerTitleStyle: {
               fontWeight: 'bold',
             },
-            headerTitleAlign: 'center'
+            headerTitleAlign: 'center',
           }}
         />
         <Stack.Screen 
@@ -131,9 +144,12 @@ function RootLayoutNav() {
           options={{ 
             presentation: 'modal', 
             headerTitle: 'Bayar',
-            headerStyle: {
-              backgroundColor: COLORS.primary,
-            },
+            headerBackground: () => (
+              <LinearGradient
+                colors={['#366FB3', '#4A8FE1']}
+                style={{ flex: 1 }}
+              />
+            ),
             headerTintColor: COLORS.offwhite,
             headerTitleStyle: {
               fontWeight: 'bold',
@@ -147,9 +163,12 @@ function RootLayoutNav() {
           options={{ 
             presentation: 'modal', 
             headerTitle: 'Chat',
-            headerStyle: {
-              backgroundColor: COLORS.primary,
-            },
+            headerBackground: () => (
+              <LinearGradient
+                colors={['#366FB3', '#4A8FE1']}
+                style={{ flex: 1 }}
+              />
+            ),
             headerTintColor: COLORS.offwhite,
             headerTitleStyle: {
               fontWeight: 'bold',
@@ -162,13 +181,17 @@ function RootLayoutNav() {
           options={{ 
             presentation: 'modal', 
             headerTitle: 'Notification',
-            headerStyle: {
-              backgroundColor: COLORS.primary,
-            },
+            headerBackground: () => (
+              <LinearGradient
+                colors={['#366FB3', '#4A8FE1']}
+                style={{ flex: 1 }}
+              />
+            ),
             headerTintColor: COLORS.offwhite,
             headerTitleStyle: {
               fontWeight: 'bold',
-            }
+            },
+            headerTitleAlign: 'center',
           }}
         />
         <Stack.Screen 
@@ -177,9 +200,12 @@ function RootLayoutNav() {
           options={{ 
             presentation: 'modal', 
             headerTitle: 'Request Form',
-            headerStyle: {
-              backgroundColor: COLORS.primary,
-            },
+            headerBackground: () => (
+              <LinearGradient
+                colors={['#366FB3', '#4A8FE1']}
+                style={{ flex: 1 }}
+              />
+            ),
             headerTintColor: COLORS.offwhite,
             headerTitleStyle: {
               fontWeight: 'bold',
