@@ -2,7 +2,7 @@ import { ScrollView, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/constants/Themed';
-import { SetStateAction, useState } from 'react';
+import { JSXElementConstructor, ReactElement, ReactNode, ReactPortal, SetStateAction, useState } from 'react';
 import { Ionicons, MaterialCommunityIcons, MaterialIcons, Octicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 
@@ -14,7 +14,7 @@ export default function TransactionScreen() {
   
   const activeStyle = { backgroundColor: "#3A76BD", color: "white" };
   const activeTextStyle = { color: "white" };
-  const products = [1, 2, 3, 4, 5];
+  const products = [1, 2];
 
 
   return (
@@ -144,16 +144,23 @@ export default function TransactionScreen() {
         <ScrollView 
           showsVerticalScrollIndicator={false}
         >
-          {products.map((product, index) => (
-            <ProductOrdered key={index} />
-          ))}
+          <ProductOrdered jastiperName='GameZone' locationJastiper='Amerika Serikat' image='https://drive.google.com/uc?export=view&id=1w3qWVodynV-HEaKt1TBps_dU8thcssN1' productName='Laptop Gaming G7' productPrice='Rp18.000.000' total='Rp56.000.000'/>
+          <ProductOrdered jastiperName='GadgetHub' locationJastiper='Korea Selatan' image='https://drive.google.com/uc?export=view&id=1Lb3yKcCC_X27dkEigFOT8D-ghhwvS8uC' productName='Tablet Pro 10.5' productPrice='Rp8.500.000' total='Rp25.500.000'/>
         </ScrollView>
       </View>
     </View>
   );
 }
+interface ProductOrderedProps {
+  jastiperName: string;
+  locationJastiper: string;
+  image: string;
+  productName: string;
+  productPrice: string;
+  total: string;
+}
 
-const ProductOrdered = () => {
+const ProductOrdered: React.FC<ProductOrderedProps> = ({jastiperName, locationJastiper, image, productName, productPrice, total}) => {
   const moveToPage = (page: string) => {
     // Handle button press
     router.push(page);
@@ -163,22 +170,22 @@ const ProductOrdered = () => {
     <View style={[styles.container, {marginBottom: 20}]}>
       {/* title and location */}
       <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', alignSelf: 'stretch'}}>
-        <Text style={{fontWeight: 'bold', fontSize: 18}}>Super Jastip</Text>
+        <Text style={{fontWeight: 'bold', fontSize: 18}}>{jastiperName}</Text>
         {/* location */}
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Ionicons name="location" size={20} color="#1556A4" />
-          <Text style={{fontWeight: 'regular', fontSize: 14}}>Korea Selatan</Text>
+          <Text style={{fontWeight: 'regular', fontSize: 14}}>{locationJastiper}</Text>
         </View>
       </View>
       {/* image, description, and amount */}
       <View style={{flexDirection: 'row', alignSelf: 'stretch',justifyContent: 'space-between', alignItems: 'center'}}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
         {/* Image */}
-        <Image source={require('../../assets/images/product-1.png')} style={{width: 100, height: 100}}/>
+        <Image source={{uri: image}} style={{width: 100, height: 100}}/>
         {/* description */}
           <View style={{marginLeft: 5, maxWidth: 150}}>
-            <Text>BIODANCE Bio-Collagen Real Deep Mask</Text>
-            <Text>Rp. 70.000</Text>
+            <Text>{productName}</Text>
+            <Text>{productPrice}</Text>
           </View>
         </View>
         {/* amount */}
@@ -189,7 +196,7 @@ const ProductOrdered = () => {
       {/* tot. product and price */}
       <View style={{flexDirection: 'row', alignSelf: 'stretch', justifyContent: 'space-between'}}>
         <Text>3 Produk</Text>
-        <Text style={{fontWeight: 'bold', color: '#1188AE'}}>total: Rp210.000</Text>
+        <Text style={{fontWeight: 'bold', color: '#1188AE'}}>total: {total}</Text>
       </View> 
       {/* separator line */}
       <View style={styles.separator} />
