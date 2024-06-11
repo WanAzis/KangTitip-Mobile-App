@@ -24,6 +24,12 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  // const { user, loading } = useAuth();
+
+  // if (loading) {
+  //   // Tampilkan splash screen atau loading spinner
+  //   return null;
+  // }
 
   const [loaded, error] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
@@ -63,6 +69,7 @@ function RootLayoutNav() {
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        {/* <Stack.Screen name="authScreen" options={{ headerShown: false }} /> */}
         <Stack.Screen 
           name="productDetails"
           // component={NotifScreen}
@@ -210,6 +217,14 @@ function RootLayoutNav() {
             headerTitleStyle: {
               fontWeight: 'bold',
             }
+          }}
+        />
+        <Stack.Screen 
+          name="authScreen"
+          // component={NotifScreen}
+          options={{ 
+            presentation: 'modal', 
+            headerTitle: 'Authentication',
           }}
         />
       </Stack>

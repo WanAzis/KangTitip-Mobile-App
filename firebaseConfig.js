@@ -11,6 +11,7 @@ import {
   updateDoc,
   query,
   where, } from "firebase/firestore";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, User, initializeAuth, getReactNativePersistence, signOut } from "firebase/auth";
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -30,7 +31,10 @@ const app = initializeApp(firebaseConfig);
 // Initialize Cloud Firestore and get a reference to the service
 const firestore = getFirestore(app);
 
-// const product = doc(firestore, 'Product')
+const auth = getAuth(app);
+// initializeAuth(app, {
+//   persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+// });
 
 export { 
   firestore, 
@@ -43,4 +47,13 @@ export {
   deleteDoc,
   updateDoc,
   query,
-  where, };
+  where,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  User,
+  initializeAuth, 
+  getReactNativePersistence,
+  getAuth,
+  auth,
+  signOut,
+};

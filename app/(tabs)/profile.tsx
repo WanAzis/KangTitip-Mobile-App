@@ -5,8 +5,11 @@ import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/constants/Themed';
 import { FontAwesome5, FontAwesome6, MaterialIcons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { auth, signOut } from '@/firebaseConfig';
 
 export default function ProfileScreen() {
+  // const user = auth.currentUser;
+  
   return (
     <View style={styles.backdrop}>
       <ScrollView
@@ -58,7 +61,7 @@ export default function ProfileScreen() {
         </View>      
         <ArrowedButton text='Form Bantuan' onPress={() => {}}/>
         {/* Tombol keluar */}
-        <TouchableOpacity style={{alignSelf: 'center', backgroundColor: 'transparent', marginVertical: 20}}>
+        <TouchableOpacity style={{alignSelf: 'center', backgroundColor: 'transparent', marginVertical: 20} } onPress={() => signOut(auth)}>
           <Text style={{fontWeight: 'regular', color: '#CD2E3A', fontSize: 14}}>Keluar</Text>
         </TouchableOpacity>
       </ScrollView>
