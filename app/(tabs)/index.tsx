@@ -11,25 +11,6 @@ import ProductCard from "@/components/ProductCard";
 import { collection, firestore, getAuth, getDocs } from "@/firebaseConfig";
 import Flag from "@/components/flag";
 
-// // Data dummy untuk produk
-// // const products = Array.from({ length: 10 }, (_, index) => ({
-// //   id: index.toString(),
-// //   name: `Product ${index + 1}`,
-// // }));
-
-
-// type Country = {
-//   id: string;
-//   name: string;
-//   flag: string;
-// };
-
-// type CountryProps = {
-//   country: Country;
-//   isActive: boolean;
-//   onSelectCountry: (countryName: string) => void;
-// };
-
 const countryData = [
   {
     id: "1",
@@ -82,56 +63,6 @@ const countryData = [
     flag: "https://img.icons8.com/?size=100&id=15530&format=png&color=000000",
   },
 ];
-
-// // Flag component
-// const Flag: React.FC<CountryProps> = ({ country, isActive, onSelectCountry }) => {
-  //   const [activeFlag, setActiveFlag] = useState<string | null>(null);
-  
-  //   const handleFlagPicker = () => {
-    //     onSelectCountry(country.name);
-    //   };
-  
-//   const activeStyle = { backgroundColor: "#3A76BD", color: "white" };
-//   const activeTextStyle = { color: "white" };
-
-//   return (
-//     <TouchableOpacity
-//       style={[
-//         {
-//           flexDirection: "row",
-//           alignItems: "center",
-//           columnGap: 5,
-//           marginLeft: 5,
-//           padding: 5,
-//           paddingBottom: 5,
-//           borderRadius: 25,
-//           minHeight: 25,
-//           backgroundColor: "#D9D9D9",
-//         },
-//         activeFlag === country.name ? activeStyle : {},
-//       ]}
-//       onPress={() => handleFlagPicker(country.name)}
-//       >
-//       <Image
-//         source={{ uri: country.flag }}
-//         style={{ width: 20, height: 20, borderWidth: 2, borderRadius: 10 }}
-//       />
-//       <Text
-//         style={[{
-//           fontSize: 11,
-//           textAlign: "center",
-//           textAlignVertical: "center",
-//         },
-//         activeFlag === country.name ? activeTextStyle : {},
-//         ]}
-//       >
-//         {country.name}
-//       </Text>
-//     </TouchableOpacity>
-//   );
-// };
-
-
 export default function HomePage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);

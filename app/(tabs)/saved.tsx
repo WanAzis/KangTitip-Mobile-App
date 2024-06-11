@@ -27,18 +27,6 @@ export default function SavedScreen() {
             imageUrl: doc.data().foto,
             ...doc.data()
           }));
-          // savedProductsSnapshot.forEach((doc) => {
-          //   const productData = doc.data();
-          //   // Extract image file ID from Google Drive link
-          //   const fileId = productData.foto.split('/d/')[1].split('/')[0];
-          //   const imageUrl = `https://drive.google.com/uc?export=view&id=${fileId}`;
-    
-          //   productList.push({
-          //     ...productData,
-          //     id: doc.id,
-          //     imageUrl, // Add converted image URL to product data
-          //   });
-          // });
 
           setSavedProducts(productsList);
           setLoading(false);
@@ -62,7 +50,7 @@ export default function SavedScreen() {
           backgroundColor: "transparent",
         }}>
         <Text style={{ color: "#004859", fontWeight: "bold", fontSize: 14 }}>
-          XX Produk
+          
         </Text>
         <View
           style={{

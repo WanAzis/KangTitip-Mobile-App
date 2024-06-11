@@ -5,15 +5,69 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, Pressable, TouchableOpacity, StyleProp } from 'react-native';
 
 
+
 interface ProductCardProps {
   product: any;
   style: any;
 }
 
+const countryData = [
+  {
+    id: "1",
+    name: "Indonesia",
+    flag: "https://img.icons8.com/?size=100&id=lph_obIfg-jT&format=png&color=000000",
+  },
+  {
+    id: "3",
+    name: "Singapore",
+    flag: "https://img.icons8.com/?size=100&id=8H-8FMObN4vB&format=png&color=000000",
+  },
+  {
+    id: "11",
+    name: "Amerika Serikat",
+    flag: "https://img.icons8.com/?size=100&id=aRiu1GGi6Aoe&format=png&color=000000",
+  },
+  {
+    id: "4",
+    name: "Thailand",
+    flag: "https://img.icons8.com/?size=100&id=IWVDTvmUNsig&format=png&color=000000",
+  },
+  {
+    id: "8",
+    name: "Jerman",
+    flag: "https://img.icons8.com/?size=100&id=hTMPE6ntTofO&format=png&color=000000",
+  },
+  {
+    id: "9",
+    name: "Jepang",
+    flag: "https://img.icons8.com/?size=100&id=McQbrq9qaQye&format=png&color=000000",
+  },
+  {
+    id: "10",
+    name: "Korea Selatan",
+    flag: "https://img.icons8.com/?size=100&id=-_RS8ho736Fs&format=png&color=000000",
+  },
+  {
+    id: "7",
+    name: "Myanmar",
+    flag: "https://img.icons8.com/?size=100&id=mdqlbmCXtG0X&format=png&color=000000",
+  },
+  {
+    id: "5",
+    name: "Vietnam",
+    flag: "https://img.icons8.com/?size=100&id=60257&format=png&color=000000",
+  },
+  {
+    id: "6",
+    name: "Philippines",
+    flag: "https://img.icons8.com/?size=100&id=15530&format=png&color=000000",
+  },
+];
+
 // Function to format the price with thousand separator
-const formatPrice = (price: any) => {
-  // return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  return price.toLocaleString('id-ID');
+const formatPrice = (harga: number) => {
+  // return harga.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  return harga.toLocaleString('id-ID');
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, style }) => {
@@ -24,12 +78,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, style }) => {
     router.push(`/productDetails/${product.id}`);
   };
 
+  const country = countryData.find(country => country.name === product.asalNegara);
+
   return (
     <TouchableOpacity onPress={handlePress} style={[styles.productCard, style]}>
       {/* logo negara */}
       <View style={{position: 'absolute', right: 5, top: 5, zIndex: 50}}>
         <Image
-          source={{ uri: 'https://img.icons8.com/?size=100&id=nMjaQrfPvnDz&format=png&color=000000'}}
+          source={{ uri: country.flag }}
           style={{ width: 20, height: 20, borderWidth: 2, borderRadius: 10 }}
         />
       </View>
