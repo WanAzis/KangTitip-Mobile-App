@@ -20,7 +20,6 @@ export default function SavedScreen() {
         const savedProductsRef = collection(firestore, userId, 'productSaved', 'products');
         try {
           const savedProductsSnapshot = await getDocs(savedProductsRef);
-          // const productList = [];
 
           const productsList = savedProductsSnapshot.docs.map(doc => ({
             id: doc.id,
