@@ -26,7 +26,7 @@ export default function RequestFormScreen() {
                     {/* nama jastiper */}
                     <View style={{backgroundColor: 'transparent'}}>
                         <Text style={{fontSize: 10}}>Request ke Jastiper</Text>
-                        <Text style={{fontSize: 24, fontWeight: 'bold'}}>Mang Titip</Text>
+                        <Text style={{fontSize: 24, fontWeight: 'bold'}}>Super Jastip</Text>
                     </View>
                 </View>
                 {/* tombol ganti */}

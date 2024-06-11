@@ -45,10 +45,9 @@ export default function ProfileScreen() {
         <View style={{flexDirection: 'row', alignSelf: 'stretch', alignItems: 'center', backgroundColor: 'transparent', paddingHorizontal: 20}}>
           <Text style={{fontWeight: 'bold', fontSize: 16}}>Pengaturan</Text>
         </View>
-        <ArrowedButton text="Alamat" onPress={() => {}}/>
+        <ArrowedButton text="Alamat" onPress={() => {router.push('/editProfile')}}/>
         <ArrowedButton text="Toko" onPress={() => {}}/>
         <ArrowedButton text="Notifikasi" onPress={() => {router.push('/notification')}}/>
-        <ArrowedButton text="Preferensi" onPress={() => {}}/>  
         {/* Aktivitas */}
         <View style={{flexDirection: 'row', alignSelf: 'stretch', alignItems: 'center', backgroundColor: 'transparent', paddingHorizontal: 20}}>
           <Text style={{fontWeight: 'bold', fontSize: 16}}>Aktivitas</Text>
@@ -60,11 +59,7 @@ export default function ProfileScreen() {
         <View style={{flexDirection: 'row', alignSelf: 'stretch', alignItems: 'center', backgroundColor: 'transparent', paddingHorizontal: 20}}>
           <Text style={{fontWeight: 'bold', fontSize: 16}}>Bantuan</Text>
         </View>      
-        <ArrowedButton text='Penggunaan "Request"' onPress={() => {}}/>
-        <ArrowedButton text="Panduan buka toko jastip" onPress={() => {}}/>
-        <ArrowedButton text="Cara memesan produk" onPress={() => {}}/>
-        <ArrowedButton text="Kelola profil" onPress={() => {}}/>
-        <ArrowedButton text="Penggunaan filter & sort" onPress={() => {}}/>
+        <ArrowedButton text='Form Bantuan' onPress={() => {}}/>
         {/* Tombol keluar */}
         <TouchableOpacity style={{alignSelf: 'center', backgroundColor: 'transparent', marginVertical: 20} } onPress={() => signOut(auth)}>
           <Text style={{fontWeight: 'regular', color: '#CD2E3A', fontSize: 14}}>Keluar</Text>

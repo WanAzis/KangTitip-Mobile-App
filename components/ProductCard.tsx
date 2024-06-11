@@ -11,7 +11,7 @@ interface ProductCardProps {
 }
 
 // Function to format the price with thousand separator
-const formatPrice = (price) => {
+const formatPrice = (price: any) => {
   // return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   return price.toLocaleString('id-ID');
 };
@@ -26,6 +26,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, style }) => {
 
   return (
     <TouchableOpacity onPress={handlePress} style={[styles.productCard, style]}>
+      {/* logo negara */}
+      <View style={{position: 'absolute', right: 5, top: 5, zIndex: 50}}>
+        <Image
+          source={{ uri: 'https://img.icons8.com/?size=100&id=nMjaQrfPvnDz&format=png&color=000000'}}
+          style={{ width: 20, height: 20, borderWidth: 2, borderRadius: 10 }}
+        />
+      </View>
       <View style={styles.imageWrapper}>
         <Image
             source={{ uri: product.imageUrl }}
