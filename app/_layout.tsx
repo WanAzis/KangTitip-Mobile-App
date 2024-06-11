@@ -179,7 +179,8 @@ function RootLayoutNav() {
             headerTintColor: COLORS.offwhite,
             headerTitleStyle: {
               fontWeight: 'bold',
-            }
+            },
+            headerTitleAlign: 'center'  
           }}
         />
         <Stack.Screen 
